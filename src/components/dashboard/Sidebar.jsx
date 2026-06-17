@@ -8,6 +8,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BiMoney } from "react-icons/bi";
 import { TbAsset } from "react-icons/tb";
+import Logo from "../home/Logo";
 
 export default function DashboardSidebar() {
   const { data: session } = authClient.useSession();
@@ -37,7 +38,7 @@ export default function DashboardSidebar() {
   const NavContent = () => (
     <nav className="flex flex-col gap-2 p-4">
       <div className="mb-6 px-3">
-        <h1 className="text-2xl font-extrabold text-primary tracking-tight"><Link href={'/'}> techBazar</Link></h1>
+        <h1 className="text-2xl font-extrabold text-primary tracking-tight"><Link href={'/'}> <Logo /></Link></h1>
       </div>
       {navItems.map((item) => {
         // DYNAMIC LOGIC:

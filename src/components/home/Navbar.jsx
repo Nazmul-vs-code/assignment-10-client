@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { BiLogOut } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { MdDashboard } from "react-icons/md";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,10 +31,7 @@ const Navbar = () => {
   return (
     <div>
       <div className="bg-black p-1 text-white">
-        <marquee>
-          🎉 Avail Up to 4% Extra Discount with Bank Transfer | 💳 Cash on
-          Delivery Available | 🚚 Fast Delivery in 2–3 Days.
-        </marquee>
+        
       </div>
 
       <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
@@ -72,7 +70,7 @@ const Navbar = () => {
             <Link href={'/'}>
               <div className="flex items-center gap-3">
                 
-                <p className="font-bold">Tech Bazaar</p>
+                <Logo />
               </div>
             </Link>
           </div>
@@ -181,10 +179,12 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="mt-4 flex flex-col gap-2 border-t border-separator pt-4">
-                <Link href="#" className="block py-2">
+                <Link href="/signin" className="block py-2">
                   Login
                 </Link>
+                <Link href={`/signup`}>
                 <Button className="w-full">Sign Up</Button>
+                </Link>
               </li>
             </ul>
           </div>

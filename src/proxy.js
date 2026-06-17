@@ -11,9 +11,9 @@ export async function proxy(request) {
     return NextResponse.redirect(new URL('/signin', request.url))
    }
 
-   if(session?.user?.role=='seller' && session?.user?.plan=='free'){
-    return  NextResponse.redirect(new URL('/pricing', request.url))
-   }
+//    if(session?.user?.role=='seller' && session?.user?.plan=='free'){
+//     return  NextResponse.redirect(new URL('/pricing', request.url))
+//    }
 }
 
 export const config = {

@@ -23,6 +23,23 @@ export const auth = betterAuth({
       plan: {
         defaultValue: "free",
       },
+
+      phone: {
+        type: "string",
+        required: false,
+        defaultValue: "01111",
+        input: true,
+      },
+      location: { 
+        type: "string", 
+        required: false, 
+        input: true 
+      },
+      photo: { 
+        type: "string", 
+        required: false, 
+        input: true 
+      },
     },
   },
   session: {
