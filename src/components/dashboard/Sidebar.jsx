@@ -1,7 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
-import { Bars } from "@gravity-ui/icons";
+import { Bars, Heart, Receipt } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
 import { ChartArea, User2 } from "lucide-react";
 import Link from "next/link";
@@ -23,8 +23,9 @@ export default function DashboardSidebar() {
     ],
     buyer: [
       { icon: ChartArea, label: "Overview", link: "/dashboard/buyer" },
-      { icon: TbAsset, label: "Products", link: "/dashboard/buyer/products" },
-      { icon: BiMoney, label: "Transaction", link: "/dashboard/buyer/transaction" },
+      { icon: Receipt, label: "My orders", link: "/dashboard/buyer/orders" },
+      { icon: Heart, label: "My wishlist", link: "/dashboard/buyer/wishlist" },
+      { icon: BiMoney, label: "My payment history", link: "/dashboard/buyer/payment" },
     ],
     admin: [
       { icon: ChartArea, label: "Overview", link: "/dashboard/admin" },

@@ -12,3 +12,14 @@ export const getToken = async () => {
 
     return token;
 }
+
+export const getJwtToken = async () => {
+
+
+    const { token } = auth.api.token({
+        headers: await headers()
+    })
+
+    return token;
+}
+

@@ -1,16 +1,12 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/home/Navbar";
 import Footer from "@/components/home/Footer";
+import { Toaster } from "react-hot-toast";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-jakarta",
 });
 
 export const metadata = {
@@ -21,17 +17,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html
-    data-theme='dark'
+      data-theme="dark"
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${jakarta.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="font-[family:var(--font-jakarta)] min-h-full flex flex-col">
         <Navbar />
-        <main>
 
+        <main className="flex-1">
           {children}
-
+          <Toaster position="top-right" />
         </main>
+
         <Footer />
       </body>
     </html>

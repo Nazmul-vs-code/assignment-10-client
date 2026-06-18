@@ -1,7 +1,13 @@
 import { SellerProductFormModal } from '@/components/dashboard/SellerProductFormModal';
+import { getUserSession } from '@/lib/api/session';
 import React from 'react';
 
-const SellerProductsPage = () => {
+const SellerProductsPage = async () => {
+
+    const user = await getUserSession()
+console.log(user , ' user in product page ')
+
+
     return (
         // 1. Full height container with flexbox to center content
         <div className="min-h-[80vh] flex flex-col items-center justify-center p-8 bg-gray-50">
@@ -18,7 +24,7 @@ const SellerProductsPage = () => {
 
             {/* 3. Modal Container (Centered) */}
             <div className="w-full max-w-md flex justify-center">
-                <SellerProductFormModal />
+                <SellerProductFormModal user={user} />
             </div>
 
             {/* Optional: Add decorative background element or helper text */}
