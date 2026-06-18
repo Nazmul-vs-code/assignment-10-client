@@ -1,10 +1,37 @@
-import React from 'react';
-import { Eye, Edit2, Trash2 } from 'lucide-react';
+'use client'; // Required for buttons and hooks
+
+import React, { useState } from 'react';
+import { Eye, Edit2, Trash2, Loader2 } from 'lucide-react';
+import toast from 'react-hot-toast'; // or use 'sonner'
+import { useRouter } from 'next/navigation';
+import { deleteProduct } from '@/lib/actions/product';
+import Link from 'next/link';
 
 const MyProductCard = ({ product }) => {
+    const [isDeleting, setIsDeleting] = useState(false);
+    const router = useRouter();
+
+    const handleDelete = async (id) => {
+        if (!confirm("Are you sure you want to delete this product?")) return;
+
+        setIsDeleting(true);
+        try {
+            const res = await deleteProduct(id);
+            if (res.deleted) {
+                toast.success("Product deleted successfully!");
+                router.refresh(); 
+            } else {
+                toast.error("Failed to delete product.");
+            }
+        } catch (error) {
+            toast.error("An error occurred.");
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
     return (
         <div className="flex items-center justify-between p-4 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-zinc-700 transition mb-3">
-            {/* Left side: Image and Info */}
             <div className="flex items-center gap-4">
                 <img 
                     src={product.images[0]} 
@@ -15,13 +42,10 @@ const MyProductCard = ({ product }) => {
                     <h3 className="font-bold text-white text-lg">{product.title}</h3>
                     <div className="flex gap-2 text-xs mt-1">
                         <span className="text-blue-400 border border-blue-900/50 px-2 py-0.5 rounded">{product.category}</span>
-                        <span className="text-emerald-400 border border-emerald-900/50 px-2 py-0.5 rounded">New</span>
-                        <span className="text-emerald-400 border border-emerald-900/50 px-2 py-0.5 rounded">Approved</span>
                     </div>
                 </div>
             </div>
 
-            {/* Right side: Price, Stock, and Actions */}
             <div className="flex items-center gap-8">
                 <div className="text-right">
                     <p className="text-emerald-500 font-bold text-lg">${product.price}</p>
@@ -29,8 +53,17 @@ const MyProductCard = ({ product }) => {
                 </div>
                 <div className="flex gap-3 text-zinc-400">
                     <button className="hover:text-white transition"><Eye size={18} /></button>
+
+                    <Link href={`/dashboard/seller/my-products/${product?._id}`}>
                     <button className="hover:text-blue-400 transition"><Edit2 size={18} /></button>
-                    <button className="hover:text-red-500 transition"><Trash2 size={18} /></button>
+                    </Link>
+                    <button 
+                        onClick={() => handleDelete(product._id)}
+                        disabled={isDeleting}
+                        className="hover:text-red-500 transition"
+                    >
+                        {isDeleting ? <Loader2 size={18} className="animate-spin" /> : <Trash2 size={18} />}
+                    </button>
                 </div>
             </div>
         </div>

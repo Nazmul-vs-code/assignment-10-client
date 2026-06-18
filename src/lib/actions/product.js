@@ -21,3 +21,32 @@ export const createProduct = async (product) => {
     const data = await res.json()
     return data
 }
+
+
+// Delete
+export const deleteProduct = async (id) => {
+    const { data: token } = await authClient.token()
+    const res = await fetch(`${baseURL}/seller/product/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'authorization': `Bearer ${token?.token}`,
+        },
+    })
+    return await res.json()
+}
+
+
+
+// Update (PATCH)
+export const updateProduct = async (id, updatedData) => {
+    const { data: token } = await authClient.token()
+    const res = await fetch(`${baseURL}/seller/product/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `Bearer ${token?.token}`,
+        },
+        body: JSON.stringify(updatedData)
+    })
+    return await res.json()
+}
