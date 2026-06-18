@@ -1,7 +1,8 @@
 import { Card, Button } from "@heroui/react";
-import { DollarSign, Trash2 } from "lucide-react";
+import { DollarSign } from "lucide-react";
 import Link from "next/link";
 import { FcRight } from "react-icons/fc";
+import { DeleteButton } from "./DeleteButton";
 
 export const WishlistCard = ({ item }) => {
   return (
@@ -18,16 +19,19 @@ export const WishlistCard = ({ item }) => {
         </p>
       </div>
 
-      <Link href={`/products/${item.productId}`} >
-      <Button 
-        color="danger" 
-        variant="flat" 
-        size="sm" 
-        className="rounded-lg w-full"
+      <Link href={`/products/${item.productId}`}>
+        <Button 
+          color="primary" 
+          variant="flat" 
+          size="sm" 
+          className="rounded-lg w-full"
         >
-        <FcRight /> Go to the details page
-      </Button>
-          </Link>
+          <FcRight /> Go to details
+        </Button>
+      </Link>
+
+      {/* The client-side interaction lives here */}
+      <DeleteButton productId={item.productId} />
     </Card>
   );
 };

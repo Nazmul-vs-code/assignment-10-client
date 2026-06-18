@@ -14,9 +14,9 @@ export const getToken = async () => {
 }
 
 export const getJwtToken = async () => {
+    'use server'
 
-
-    const { token } = auth.api.token({
+    const { token } = await auth.api.getToken({
         headers: await headers()
     })
 

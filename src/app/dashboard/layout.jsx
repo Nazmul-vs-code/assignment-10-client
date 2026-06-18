@@ -11,7 +11,7 @@ const layout = ({ children }) => {
             
             {/* 2. flex-1 makes main grow to fill all remaining horizontal space */}
             <main className='flex-1 p-6'>
-                <h2>navbar</h2>
+                <h2 className=' text-3xl text-yellow-500 p-1 text-center'>Dashboard</h2>
                 {children}
             </main>
         </div>

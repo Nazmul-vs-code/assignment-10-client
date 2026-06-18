@@ -1,10 +1,15 @@
-import { subscription } from '@/lib/actions/payment'
+import { savePayment, subscription } from '@/lib/actions/payment'
+import { getJwtToken } from '@/lib/api/getToken'
 import { stripe } from '@/lib/stripe'
+// import { getJwtToken } from 'better-auth/plugins'
 import { redirect } from 'next/navigation'
 
 
 export default async function Success({ searchParams }) {
   const { session_id } = await searchParams
+
+  const token = await getJwtToken()
+  console.log(token , ' token ')
 
   if (!session_id)
     throw new Error('Please provide a valid session_id (`cs_test_...`)')
@@ -24,7 +29,7 @@ export default async function Success({ searchParams }) {
   if (status === 'complete') {
     // console.log(metadata , " metadata ")
 
-    const res = await subscription({...metadata , sessionId:session_id})
+    const res = await savePayment({...metadata , sessionId:session_id}, token)
     console.log(res , ' res from backend ')
 
     return (

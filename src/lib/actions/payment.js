@@ -14,3 +14,17 @@ export const subscription = async (data) => {
     return resData
 }
 
+
+export const savePayment = async (paymentData, token) => {
+    const res = await fetch(`${baseURL}/payment`, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${token}` // Assuming you need auth for the /payment endpoint
+        },
+        body: JSON.stringify(paymentData)
+    });
+
+    const resData = await res.json();
+    return resData;
+};

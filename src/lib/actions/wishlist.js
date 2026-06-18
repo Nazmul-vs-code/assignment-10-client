@@ -17,3 +17,20 @@ export const addWishList = async (productData , token) => {
     
     return await res.json();
 }
+
+
+export const deleteWishlistItem = async (productId, token) => {
+    const res = await fetch(`${baseURL}/wishlist/${productId}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to delete item from wishlist");
+    }
+
+    return await res.json();
+};
