@@ -45,6 +45,7 @@ export async function POST(request) {
         userEmail : user?.email,
         productId,
         Author,
+        userEmail:user?.email,
       },
       mode: 'payment',
       success_url: `${origin}/products/${productId}/success?session_id={CHECKOUT_SESSION_ID}`,

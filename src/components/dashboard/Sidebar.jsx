@@ -11,6 +11,7 @@ import { TbAsset } from "react-icons/tb";
 import Logo from "../home/Logo";
 import { FaProductHunt } from "react-icons/fa6";
 import { FcPackage, FcPlus } from "react-icons/fc";
+import { FaChartArea } from "react-icons/fa";
 
 export default function DashboardSidebar() {
   const { data: session } = authClient.useSession();
@@ -23,7 +24,7 @@ export default function DashboardSidebar() {
       { icon: FcPlus, label: "Create Products", link: "/dashboard/seller/products" },
       { icon: FaProductHunt, label: "My Products", link: "/dashboard/seller/my-products" },
       { icon: FcPackage, label: "My Orders", link: "/dashboard/seller/my-orders" },
-      { icon: BiMoney, label: "Transaction", link: "/dashboard/seller/transaction" },
+      { icon: FaChartArea, label: "Analytics", link: "/dashboard/seller/analytics" },
     ],
     buyer: [
       { icon: ChartArea, label: "Overview", link: "/dashboard/buyer" },
