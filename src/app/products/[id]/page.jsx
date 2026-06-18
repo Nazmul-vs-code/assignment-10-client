@@ -259,6 +259,7 @@ const ProductDetailsPage = ({ params }) => {
             
           <input type="hidden" name="productPrice" value={product?.price} />
           <input type="hidden" name="productId" value={product?._id} />
+          <input type="hidden" name="authorId" value={product?.sellerInfo?.userId} />
 
 
           <Button

@@ -9,7 +9,7 @@ export default async function Success({ searchParams }) {
   const { session_id } = await searchParams
 
   const token = await getJwtToken()
-  console.log(token , ' token ')
+  // console.log(token , ' token ')
 
   if (!session_id)
     throw new Error('Please provide a valid session_id (`cs_test_...`)')
@@ -25,6 +25,8 @@ export default async function Success({ searchParams }) {
   if (status === 'open') {
     return redirect('/')
   }
+
+  // console.log(metadata , ' meta data here ')
 
   if (status === 'complete') {
     // console.log(metadata , " metadata ")

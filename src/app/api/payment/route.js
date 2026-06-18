@@ -13,6 +13,10 @@ export async function POST(request) {
 
     const productId = formData.get('productId');
     const PRICE_ID = formData.get('productPrice');
+    const Author = formData.get('authorId');
+
+    // console.log(Author , ' authorId ' , productId, ' product id')
+    
 
     const user = await getUserSession()
 
@@ -39,7 +43,8 @@ export async function POST(request) {
         priceId : PRICE_ID,
         userId : user?.id,
         userEmail : user?.email,
-        productId
+        productId,
+        Author,
       },
       mode: 'payment',
       success_url: `${origin}/products/${productId}/success?session_id={CHECKOUT_SESSION_ID}`,

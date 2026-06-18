@@ -10,6 +10,7 @@ import { BiMoney } from "react-icons/bi";
 import { TbAsset } from "react-icons/tb";
 import Logo from "../home/Logo";
 import { FaProductHunt } from "react-icons/fa6";
+import { FcPackage, FcPlus } from "react-icons/fc";
 
 export default function DashboardSidebar() {
   const { data: session } = authClient.useSession();
@@ -19,8 +20,9 @@ export default function DashboardSidebar() {
   const dashboardItems = {
     seller: [
       { icon: ChartArea, label: "Overview", link: "/dashboard/seller" },
-      { icon: TbAsset, label: "Create Products", link: "/dashboard/seller/products" },
+      { icon: FcPlus, label: "Create Products", link: "/dashboard/seller/products" },
       { icon: FaProductHunt, label: "My Products", link: "/dashboard/seller/my-products" },
+      { icon: FcPackage, label: "My Orders", link: "/dashboard/seller/my-orders" },
       { icon: BiMoney, label: "Transaction", link: "/dashboard/seller/transaction" },
     ],
     buyer: [
