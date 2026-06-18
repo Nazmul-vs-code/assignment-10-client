@@ -26,3 +26,20 @@ export const getProductById = async (id) => {
     const response = await fetch(`${baseURL}/products/${id}`);
     return await response.json();
 }
+
+export const getMyProducts = async (token) => {
+    const res = await fetch(`${baseURL}/my-products`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        cache: 'no-store' 
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch your products");
+    }
+
+    return await res.json();
+};

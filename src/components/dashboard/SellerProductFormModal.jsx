@@ -32,8 +32,9 @@ export function SellerProductFormModal({ user }) {
 
     const result = await createProduct(product);
     if (result.acknowledged) {
-      toast.success("Your product was posted")
+      toast.success("Your product was posted!!!")
     }
+    
     console.log(result, ' result from backend ');
   };
 
@@ -76,7 +77,7 @@ export function SellerProductFormModal({ user }) {
                     <Input type="number" placeholder="0.00" />
                   </TextField>
 
-                  <TextField variant="secondary">
+                  <TextField isRequired variant="secondary">
                     <Label>Product Photo</Label>
                     <input type="file" name="photo" className="w-full text-sm border rounded-md p-2" />
                   </TextField>
