@@ -48,6 +48,7 @@ export const ProductCard = ({ product }) => {
       productTitle: product.title,
       productImage: product.images?.[0],
       productPrice: product.price,
+      productCategory: product.category
     };
 
     try {
