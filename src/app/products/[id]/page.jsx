@@ -250,15 +250,29 @@ const ProductDetailsPage = ({ params }) => {
           </div>
 
           {/* CTA */}
+
+          <form 
+
+            action={`/api/payment`}
+            method="POST"
+          >
+            
+          <input type="hidden" name="productPrice" value={product?.price} />
+          <input type="hidden" name="productId" value={product?._id} />
+
+
           <Button
             variant="primary"
             className="
-              rounded-none w-full
+          
+            rounded-none w-full
             "
-          >
+            type="submit"
+            >
             <ShoppingCart size={20} />
             ADD TO CART
           </Button>
+            </form>
         </motion.div>
       </div>
     </motion.main>
