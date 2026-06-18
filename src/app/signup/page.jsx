@@ -17,6 +17,7 @@ import {
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 
 export default function SignUpPage() {
@@ -27,12 +28,19 @@ export default function SignUpPage() {
     const formData = new FormData(e.currentTarget);
     const user = Object.fromEntries(formData.entries());
 
-    await authClient.signUp.email({
+    const { data, error } = await authClient.signUp.email({
       ...user,
       
     });
 
-    router.push('/');
+    if (data) {
+      toast.success('data here : ' + data.user)
+      router.push('/');
+    }
+    if (error) {
+
+      toast.error('error here : ' + error.message)
+    }
   };
 
   return (
@@ -59,6 +67,7 @@ export default function SignUpPage() {
             <TextField isRequired name="email" type="email"><Label>Email</Label><Input placeholder="john@example.com" variant="secondary" /></TextField>
             <TextField isRequired name="phone" type="tel"><Label>Phone</Label><Input placeholder="+88017xxxxxxxx" variant="secondary" /></TextField>
             <TextField isRequired name="location"><Label>Location</Label><Input placeholder="Dhaka, Bangladesh" variant="secondary" /></TextField>
+            <input type="hidden" name="status" value="active" />
             <TextField isRequired name="password" type="password"><Label>Password</Label><Input placeholder="••••••••" variant="secondary" /></TextField>
 
             <Select isRequired name="role" placeholder="Select role">

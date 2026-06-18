@@ -15,6 +15,7 @@ import {
 } from "@heroui/react";
 import { redirect } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 
 export default function SignInPage() {
   const onSubmit = async (e) => {
@@ -22,11 +23,19 @@ export default function SignInPage() {
     const formData = new FormData(e.currentTarget);
     const user = Object.fromEntries(formData.entries());
 
-    console.log( user , ' user on login ')
-    await authClient.signIn.email({
+    // console.log( user , ' user on login ')
+    const { data, error } =  await authClient.signIn.email({
       ...user,
       callbackURL: "/",
     });
+
+    if (data) {
+      toast.success('Welcome back!');
+      
+    }
+    if (error) {
+      toast.error(error.message || 'Invalid email or password');
+    }
   };
 
   return (

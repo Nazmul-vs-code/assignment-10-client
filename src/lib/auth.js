@@ -23,6 +23,9 @@ export const auth = betterAuth({
       plan: {
         defaultValue: "free",
       },
+      status: {
+        defaultValue: "active",
+      },
 
       phone: {
         type: "string",
