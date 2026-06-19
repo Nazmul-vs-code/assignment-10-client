@@ -33,6 +33,7 @@ const Navbar = () => {
             <div className="space-y-1.5">
               <span className="block h-0.5 w-6 bg-white" />
               <span className="block h-0.5 w-6 bg-white" />
+              <span className="block h-0.5 w-6 bg-white" />
             </div>
           </button>
           <Link href={'/'}><Logo /></Link>
@@ -67,7 +68,6 @@ const Navbar = () => {
                 </div>
               </Dropdown.Trigger>
               <Dropdown.Popover className="bg-zinc-950 border border-red-900/50">
-                {/* User Info Header in Dropdown */}
                 <div className="p-3 border-b border-red-900/30 flex flex-col gap-1">
                   <span className="text-sm font-semibold text-white">{user?.name}</span>
                   <span className="text-xs text-neutral-400">{user?.email}</span>
@@ -101,17 +101,27 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          {user && (
-            <div className="border-t border-red-900/30 pt-4 mt-2">
-              <div className="px-3 mb-4">
-                <p className="text-sm font-bold">{user?.name}</p>
-                <p className="text-xs text-neutral-400">{user?.email}</p>
+          
+          <div className="border-t border-red-900/30 pt-4 mt-2">
+            {!user ? (
+              <div className="flex flex-col gap-3">
+                <Link href="/signin" className="p-3 text-center border border-red-900/50 rounded-lg hover:bg-red-950/30">Login</Link>
+                <Link href="/signup" className="w-full">
+                  <Button className="w-full bg-red-600">Sign Up</Button>
+                </Link>
               </div>
-              <Link href={`/dashboard/${user?.role}`} className="block p-3 hover:bg-red-950/30 rounded-lg">Dashboard</Link>
-              <Link href="/profile" className="block p-3 hover:bg-red-950/30 rounded-lg">Profile</Link>
-              <Button variant="danger" onClick={() => authClient.signOut()} className="w-full mt-2 bg-red-600">Logout</Button>
-            </div>
-          )}
+            ) : (
+              <div className="space-y-3">
+                <div className="px-3 mb-2">
+                  <p className="text-sm font-bold">{user?.name}</p>
+                  <p className="text-xs text-neutral-400">{user?.email}</p>
+                </div>
+                <Link href={`/dashboard/${user?.role}`} className="block p-3 hover:bg-red-950/30 rounded-lg">Dashboard</Link>
+                <Link href="/profile" className="block p-3 hover:bg-red-950/30 rounded-lg">Profile</Link>
+                <Button variant="danger" onClick={() => authClient.signOut()} className="w-full mt-2 bg-red-600">Logout</Button>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </nav>
