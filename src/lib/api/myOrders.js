@@ -1,5 +1,8 @@
 'use server'
 
+import { authClient } from "../auth-client";
+import { getJwtToken } from "./getToken";
+
 const baseURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
 export const getMyOrders = async (token) => {
@@ -22,4 +25,19 @@ export const getMyOrders = async (token) => {
         console.error("Error in getMyOrders:", error);
         return []; // Return empty array on failure
     }
+};
+
+
+export const getAllOrders = async () => {
+    // const { data: token } = await authClient.token();
+    
+    const token = await getJwtToken()
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/admin/orders`, {
+        method: 'GET',
+        headers: {
+            'authorization': `Bearer ${token}`,
+        },
+    });
+
+    return await res.json();
 };
