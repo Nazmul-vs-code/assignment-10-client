@@ -22,64 +22,67 @@ const Navbar = () => {
   const user = session?.user;
   const pathName = usePathname();
 
-  // Hide Navbar on dashboard pages
   if (pathName?.includes('/dashboard')) return null;
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/80 backdrop-blur-lg">
+    <nav className="sticky top-0 z-40 w-full border-b border-red-900/30 bg-black/80 backdrop-blur-md">
       <header className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         {/* Logo and Mobile Trigger */}
         <div className="flex items-center gap-4">
-          <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button className="md:hidden p-2 text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <div className="space-y-1.5">
-              <span className="block h-0.5 w-6 bg-current" />
-              <span className="block h-0.5 w-6 bg-current" />
+              <span className="block h-0.5 w-6 bg-white" />
+              <span className="block h-0.5 w-6 bg-white" />
             </div>
           </button>
           <Link href={'/'}><Logo /></Link>
         </div>
 
         {/* Desktop Links */}
-        <ul className="hidden md:flex items-center gap-6">
+        <ul className="hidden md:flex items-center gap-8 text-neutral-300">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
-              <Link href={link.href} className="font-medium hover:text-indigo-600 transition-colors">
+              <Link href={link.href} className="font-medium hover:text-red-500 transition-colors">
                 {link.name}
               </Link>
             </li>
           ))}
         </ul>
 
-        {/* Desktop Auth / Profile */}
+        {/* Desktop Auth */}
         <div className="hidden md:flex items-center gap-4">
           {!user ? (
             <>
-              <Link href="/signin" className="font-medium">Login</Link>
-              <Link href="/signup"><Button size="sm">Sign Up</Button></Link>
+              <Link href="/signin" className="font-medium text-neutral-300 hover:text-white">Login</Link>
+              <Link href="/signup"><Button size="sm" className="bg-red-600 text-white hover:bg-red-700">Sign Up</Button></Link>
             </>
           ) : (
             <Dropdown>
               <Dropdown.Trigger>
-                <Avatar size="sm" className="cursor-pointer">
-                  <Avatar.Image src={user?.photo} referrerPolicy="no-referrer" />
-                  <Avatar.Fallback>{user?.name?.charAt(0)}</Avatar.Fallback>
-                </Avatar>
+                <div className="cursor-pointer ring-2 ring-red-900 rounded-full">
+                  <Avatar>
+                    <Avatar.Image alt={user?.name} src={user?.photo} />
+                    <Avatar.Fallback>{user?.name?.charAt(0) || 'U'}</Avatar.Fallback>
+                  </Avatar>
+                </div>
               </Dropdown.Trigger>
-              <Dropdown.Popover>
-                <div className="p-3 border-b flex items-center gap-3">
-                  <Avatar size="sm"><Avatar.Image src={user?.photo} referrerPolicy="no-referrer" /></Avatar>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-semibold">{user?.name}</span>
-                    <span className="text-xs text-muted-foreground">{user?.email}</span>
-                  </div>
+              <Dropdown.Popover className="bg-zinc-950 border border-red-900/50">
+                {/* User Info Header in Dropdown */}
+                <div className="p-3 border-b border-red-900/30 flex flex-col gap-1">
+                  <span className="text-sm font-semibold text-white">{user?.name}</span>
+                  <span className="text-xs text-neutral-400">{user?.email}</span>
                 </div>
                 <Dropdown.Menu>
                   <Dropdown.Item id="dashboard">
-                    <Link href={`/dashboard/${user?.role}`} className="flex items-center gap-2">
-                      <MdDashboard /> Dashboard
+                    <Link href={`/dashboard/${user?.role}`} className="flex items-center gap-2 text-neutral-200">
+                      <MdDashboard className="text-red-500" /> Dashboard
                     </Link>
                   </Dropdown.Item>
-                  <Dropdown.Item id="profile"><CgProfile /> Profile</Dropdown.Item>
+                  <Dropdown.Item id="profile" className="text-neutral-200">
+                    <Link href="/profile" className="flex items-center gap-2">
+                      <CgProfile className="text-red-500" /> Profile
+                    </Link>
+                  </Dropdown.Item>
                   <Dropdown.Item id="logout" variant="danger" onClick={() => authClient.signOut()}>
                     <BiLogOut /> Logout
                   </Dropdown.Item>
@@ -90,60 +93,25 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* Mobile Menu (Visible only on small screens) */}
+      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-separator bg-background p-4 flex flex-col gap-4 shadow-xl">
+        <div className="md:hidden border-t border-red-900/30 bg-zinc-950 p-4 flex flex-col gap-2 text-white">
           {NAV_LINKS.map((link) => (
-            <Link 
-              key={link.href} 
-              href={link.href} 
-              className="block font-medium p-3 hover:bg-zinc-800 rounded-lg transition"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link key={link.href} href={link.href} className="p-3 hover:bg-red-950/30 rounded-lg" onClick={() => setIsMenuOpen(false)}>
               {link.name}
             </Link>
           ))}
-          
-          <div className="border-t pt-4">
-            {!user ? (
-              <div className="flex flex-col gap-2">
-                <Link href="/signin" className="p-3">Login</Link>
-                <Link href="/signup"><Button className="w-full">Sign Up</Button></Link>
+          {user && (
+            <div className="border-t border-red-900/30 pt-4 mt-2">
+              <div className="px-3 mb-4">
+                <p className="text-sm font-bold">{user?.name}</p>
+                <p className="text-xs text-neutral-400">{user?.email}</p>
               </div>
-            ) : (
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3 px-3">
-                  <Avatar size="sm">
-                    <Avatar.Image src={user?.photo} referrerPolicy="no-referrer" />
-                    <Avatar.Fallback>{user?.name?.charAt(0)}</Avatar.Fallback>
-                  </Avatar>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-semibold">{user?.name}</span>
-                    <span className="text-xs text-muted-foreground">{user?.email}</span>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Link 
-                    href={`/dashboard/${user?.role}`} 
-                    className="flex items-center gap-2 p-3 hover:bg-zinc-800 rounded-lg"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <MdDashboard /> Dashboard
-                  </Link>
-                  <Link 
-                    href={`/profile`} 
-                    className="flex items-center gap-2 p-3 hover:bg-zinc-800 rounded-lg"
-                    
-                  >
-                    <CgProfile /> profile
-                  </Link>
-                  <Button variant="danger" onClick={() => authClient.signOut()} className="w-full justify-start">
-                    <BiLogOut /> Logout
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
+              <Link href={`/dashboard/${user?.role}`} className="block p-3 hover:bg-red-950/30 rounded-lg">Dashboard</Link>
+              <Link href="/profile" className="block p-3 hover:bg-red-950/30 rounded-lg">Profile</Link>
+              <Button variant="danger" onClick={() => authClient.signOut()} className="w-full mt-2 bg-red-600">Logout</Button>
+            </div>
+          )}
         </div>
       )}
     </nav>

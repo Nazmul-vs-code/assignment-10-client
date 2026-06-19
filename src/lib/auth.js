@@ -12,39 +12,30 @@ export const auth = betterAuth({
   database: mongodbAdapter(db, {
     client,
   }),
+
+  // These move OUT of the database object and into the main config
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    },
+  },
+
   emailAndPassword: {
     enabled: true,
   },
+
   user: {
     additionalFields: {
-      role: {
-        defaultValue: "buyer",
-      },
-      plan: {
-        defaultValue: "free",
-      },
-      status: {
-        defaultValue: "active",
-      },
-
-      phone: {
-        type: "string",
-        required: false,
-        defaultValue: "01111",
-        input: true,
-      },
-      location: { 
-        type: "string", 
-        required: false, 
-        input: true 
-      },
-      photo: { 
-        type: "string", 
-        required: false, 
-        input: true 
-      },
+      role: { defaultValue: "buyer" },
+      plan: { defaultValue: "free" },
+      status: { defaultValue: "active" },
+      phone: { type: "string", required: false, defaultValue: "01111", input: true },
+      location: { type: "string", required: false, input: true },
+      photo: { type: "string", required: false, input: true },
     },
   },
+
   session: {
     cookieCache: {
       enabled: true,
@@ -52,5 +43,6 @@ export const auth = betterAuth({
       maxAge: 60 * 24 * 60,
     },
   },
+
   plugins: [jwt()],
 });

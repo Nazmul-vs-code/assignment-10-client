@@ -63,7 +63,8 @@ export default function DashboardSidebar() {
         <div className="mb-6 flex flex-col gap-6 px-3">
           <Link href={'/'}><Logo /></Link>
           
-          <div className="flex items-center gap-3 p-2 bg-default-100 rounded-xl">
+          <div className="">
+          <Link href={`/profile`} className="flex items-center gap-3 p-2 bg-default-100 rounded-xl" >
             <Avatar  name={user?.name || "U"} size="sm" >
               <Avatar.Image alt="User" src={user?.photo} />
                <Avatar.Fallback>{user?.name?.slice(0, 2).toUpperCase()}</Avatar.Fallback>
@@ -72,6 +73,7 @@ export default function DashboardSidebar() {
               <span className="text-sm font-bold truncate">{user?.name || "User"}</span>
               <span className="text-[10px] text-default-500 uppercase">{role}</span>
             </div>
+          </Link>
           </div>
         </div>
 

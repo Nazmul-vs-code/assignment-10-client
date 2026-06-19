@@ -16,6 +16,7 @@ import {
 import { redirect } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
 
 export default function SignInPage() {
   const onSubmit = async (e) => {
@@ -36,6 +37,12 @@ export default function SignInPage() {
     if (error) {
       toast.error(error.message || 'Invalid email or password');
     }
+  };
+
+  const handleLoginWithGoogle = async () => {
+      const data = await authClient.signIn.social({
+      provider: "google",
+    });
   };
 
   return (
@@ -62,6 +69,10 @@ export default function SignInPage() {
             <Button type="submit" className={"w-full"}>
               Signin
             </Button>
+
+            <Button
+                      onClick={handleLoginWithGoogle}
+                       variant="ghost" className={'rounded-none flex w-full '} ><FcGoogle/> Login With Google</Button>
           </Fieldset>
         </Form>
       </Surface>

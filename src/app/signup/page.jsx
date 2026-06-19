@@ -43,6 +43,11 @@ export default function SignUpPage() {
     }
   };
 
+  const handleLoginWithGoogle = async () => {
+    const data = await authClient.signIn.social({
+    provider: "google",
+  });
+  }
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -87,7 +92,9 @@ export default function SignUpPage() {
           </Fieldset>
           <div className="p-4 flex items-center justify-center">
 
-          <Button variant="ghost" className={'rounded-none'} ><FcGoogle/> Login With Google</Button>
+          <Button
+          onClick={handleLoginWithGoogle}
+           variant="ghost" className={'rounded-none'} ><FcGoogle/> Login With Google</Button>
           </div>
         </Form>
       </Surface>

@@ -1,47 +1,35 @@
-import { savePayment, subscription } from '@/lib/actions/payment'
-import { getJwtToken } from '@/lib/api/getToken'
-import { stripe } from '@/lib/stripe'
-// import { getJwtToken } from 'better-auth/plugins'
-import { redirect } from 'next/navigation'
-
+import { savePayment } from '@/lib/actions/payment';
+import { getJwtToken } from '@/lib/api/getToken';
+import { stripe } from '@/lib/stripe';
+import { redirect } from 'next/navigation';
+import SuccessUI from './SuccessUI';
 
 export default async function Success({ searchParams }) {
-  const { session_id } = await searchParams
-
-  const token = await getJwtToken()
-  // console.log(token , ' token ')
+  const { session_id } = await searchParams;
+  const token = await getJwtToken();
 
   if (!session_id)
-    throw new Error('Please provide a valid session_id (`cs_test_...`)')
+    throw new Error('Please provide a valid session_id (`cs_test_...`)');
 
-  const {
-    status,
-    metadata,
-    customer_details: { email: customerEmail }
-  } = await stripe.checkout.sessions.retrieve(session_id, {
+  const session = await stripe.checkout.sessions.retrieve(session_id, {
     expand: ['line_items', 'payment_intent']
-  })
+  });
 
-  if (status === 'open') {
-    return redirect('/')
+  if (session.status === 'open') {
+    return redirect('/');
   }
 
-  // console.log(metadata , ' meta data here ')
-
-  if (status === 'complete') {
-    // console.log(metadata , " metadata ")
-
-    const res = await savePayment({...metadata , sessionId:session_id}, token)
-    console.log(res , ' res from backend ')
-
-    return (
-      <section id="success">
-        <p>
-          We appreciate your business! A confirmation email will be sent to{' '}
-          {customerEmail}. If you have any questions, please email{' '}
-          <a href="mailto:orders@example.com">orders@example.com</a>.
-        </p>
-      </section>
-    )
+  if (session.status === 'complete') {
+    // Keeping your exact DB logic
+    const res = await savePayment({ ...session.metadata, sessionId: session_id }, token);
+    
+    // Pass the retrieved data to the UI component
+    return <SuccessUI 
+      customerEmail={session.customer_details.email} 
+      orderData={session.metadata} 
+      amount={session.amount_total / 100}
+      date={new Date().toLocaleDateString()}
+      transactionId={session.payment_intent.id}
+    />;
   }
 }
