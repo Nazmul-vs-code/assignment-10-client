@@ -1,10 +1,11 @@
-"use client"; // CRITICAL: This MUST be at the top
+"use client"; 
 
 import React from 'react';
 import { Avatar, Button } from "@heroui/react";
-import { updateUserStatus } from '@/lib/actions/users';
+import { updateUserStatus, deleteUser } from '@/lib/actions/users'; // Ensure deleteUser is imported
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { TrashBin } from '@gravity-ui/icons';
 
 const AllUsersCard = ({ users }) => {
     const router = useRouter();
@@ -12,11 +13,23 @@ const AllUsersCard = ({ users }) => {
     const handleStatusUpdate = async (userId, newStatus) => {
         try {
             await updateUserStatus(userId, newStatus);
-            // Refresh the server component data
-            toast.success("status updated!!")
+            toast.success("Status updated!!");
             router.refresh(); 
         } catch (error) {
             console.error("Failed to update status:", error);
+            toast.error("Failed to update status");
+        }
+    };
+
+    const handleDelete = async (userId) => {
+        if (confirm("Are you sure you want to delete this user?")) {
+            try {
+                const res = await deleteUser(userId);
+                res.success && toast.success("User deleted successfully!") 
+            } catch (error) {
+                console.error("Failed to delete user:", error);
+                toast.error("Failed to delete user");
+            }
         }
     };
 
@@ -51,7 +64,9 @@ const AllUsersCard = ({ users }) => {
                             </span>
                             
                             <span>
-                                <Button variant={`${user?.status == 'active' ? "primary":"danger"}`} size="sm">{user?.status || 'active'}</Button>
+                                <Button variant={`${user?.status == 'active' ? "primary":"danger"}`} size="sm">
+                                    {user?.status || 'active'}
+                                </Button>
                             </span>
 
                             {user.role !== 'admin' && (
@@ -64,6 +79,18 @@ const AllUsersCard = ({ users }) => {
                                     {isBlocked ? 'Activate' : 'Block'}
                                 </Button>
                             )}
+
+                            {/* Delete Button Implementation */}
+                            {
+                                user?.role != 'admin' &&
+                            <Button 
+                            className="hover:text-red-600" 
+                            variant="ghost" 
+                            onClick={() => handleDelete(user._id)}
+                            >
+                                <TrashBin />
+                            </Button>
+                            }
                         </div>
                     </div>
                 );

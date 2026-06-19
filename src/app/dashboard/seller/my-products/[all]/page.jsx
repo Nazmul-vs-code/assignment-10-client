@@ -7,15 +7,17 @@ import { Button, Input, Label, TextField } from '@heroui/react';
 import toast from 'react-hot-toast';
 import { getProductById } from '@/lib/api/products'; // Fetcher
 import { updateProduct } from '@/lib/actions/product'; // Action
+import { authClient } from '@/lib/auth-client';
 
 const EditPage = () => {
     const params = useParams();
-    const id = params?.all; // Based on your current setup
+    const id = params?.all; 
     const router = useRouter();
 
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
     const [product, setProduct] = useState(null);
+
 
     useEffect(() => {
         if (!id) return;
@@ -28,6 +30,15 @@ const EditPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setUpdating(true);
+
+
+        const { data: session } = await authClient.getSession();
+            const user = session?.user;
+
+            // 2. Role-based Redirection
+            if (user?.role === 'admin') {
+                router.replace('/dashboard/admin/products');
+            }
         
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries());
@@ -45,6 +56,7 @@ const EditPage = () => {
             const result = await updateProduct(id, updatedProduct);
             if (result.updated) {
                 toast.success("Product updated successfully!");
+                
                 router.push('/dashboard/seller/my-products'); // Redirect back
             }
         } catch (error) {

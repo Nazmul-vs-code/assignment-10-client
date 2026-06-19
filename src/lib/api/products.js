@@ -1,5 +1,7 @@
 'use server'
 
+import { getJwtToken } from "./getToken";
+
 const baseURL = process.env.NEXT_PUBLIC_SERVER_URL
 
 export const getPublicProducts = async () => {
@@ -39,6 +41,25 @@ export const getMyProducts = async (token) => {
 
     if (!res.ok) {
         throw new Error("Failed to fetch your products");
+    }
+
+    return await res.json();
+};
+
+// For admins
+
+export const getAdminAllProducts = async () => {
+    const token = await getJwtToken()
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/admin/products`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch products");
     }
 
     return await res.json();
