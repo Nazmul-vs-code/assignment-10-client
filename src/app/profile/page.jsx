@@ -24,7 +24,7 @@ const UsersProfilePage = () => {
         try {
             await authClient.updateUser({
                 name,
-                image: photo, // Mapping your 'photo' input to the auth 'image' field
+                photo, // Mapping your 'photo' input to the auth 'image' field
                 phone
             });
 

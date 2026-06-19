@@ -57,7 +57,7 @@ export default function DashboardSidebar() {
   const navItems = dashboardItems[role] || dashboardItems.buyer;
 
   const NavContent = () => (
-    <div className="flex flex-col h-full justify-between">
+    <div className="flex flex-col h-full justify-between bg-black">
       <nav className="flex flex-col gap-2 p-4">
         {/* Logo and User Profile Section */}
         <div className="mb-6 flex flex-col gap-6 px-3">
@@ -114,12 +114,12 @@ export default function DashboardSidebar() {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:block w-64 border-r border-default-200 h-screen bg-content1 shadow-sm">
+      <aside className="hidden lg:block w-64 border-r bg-black border-default-200 h-screen bg-content1 shadow-sm">
         <NavContent />
       </aside>
 
       {/* Mobile Trigger */}
-      <div className="lg:hidden p-4">
+      <div className="lg:hidden bg-black p-4">
         <button 
           onClick={() => setIsOpen(true)}
           className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-default-100 transition-colors"
