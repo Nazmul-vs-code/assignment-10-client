@@ -2,24 +2,34 @@
 
 import { authClient } from "@/lib/auth-client";
 import { Bars } from "@gravity-ui/icons";
-import { Button } from "@heroui/react";
-import { ChartArea, User2, X } from "lucide-react";
+import { Button, Avatar } from "@heroui/react";
+import { ChartArea, User2, X, LogOut } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { BiMoney } from "react-icons/bi";
 import { useState } from "react";
 import Logo from "../home/Logo";
-import { FaProductHunt } from "react-icons/fa6";
+import { FaLeftLong, FaProductHunt } from "react-icons/fa6";
 import { FcBarChart, FcPackage, FcPlus, FcShop } from "react-icons/fc";
 import { FaChartArea } from "react-icons/fa";
 import { RiProductHuntLine } from "react-icons/ri";
 import { Heart, Receipt } from "@gravity-ui/icons";
+import { LuCircleArrowOutDownLeft } from "react-icons/lu";
 
 export default function DashboardSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session } = authClient.useSession();
-  const role = session?.user?.role || "buyer";
+  const router = useRouter();
+  
+  const user = session?.user;
+  const role = user?.role || "buyer";
   const pathname = usePathname();
+
+  const handleLogout = async () => {
+    await authClient.signOut();
+    router.push("/login");
+    router.refresh();
+  };
 
   const dashboardItems = {
     seller: [
@@ -47,30 +57,56 @@ export default function DashboardSidebar() {
   const navItems = dashboardItems[role] || dashboardItems.buyer;
 
   const NavContent = () => (
-    <nav className="flex flex-col gap-2 p-4 h-full">
-      <div className="mb-6 px-3">
-        <h1 className="text-2xl font-extrabold text-primary tracking-tight">
+    <div className="flex flex-col h-full justify-between">
+      <nav className="flex flex-col gap-2 p-4">
+        {/* Logo and User Profile Section */}
+        <div className="mb-6 flex flex-col gap-6 px-3">
           <Link href={'/'}><Logo /></Link>
-        </h1>
+          
+          <div className="flex items-center gap-3 p-2 bg-default-100 rounded-xl">
+            <Avatar  name={user?.name || "U"} size="sm" >
+              <Avatar.Image alt="User" src={user?.photo} />
+               <Avatar.Fallback>{user?.name?.slice(0, 2).toUpperCase()}</Avatar.Fallback>
+            </Avatar>
+            <div className="flex flex-col overflow-hidden">
+              <span className="text-sm font-bold truncate">{user?.name || "User"}</span>
+              <span className="text-[10px] text-default-500 uppercase">{role}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Navigation Items */}
+        {navItems.map((item) => {
+          const isOverview = item.label === "Overview";
+          const isActive = isOverview ? pathname === item.link : pathname.startsWith(item.link);
+          return (
+            <Link key={item.label} href={item.link} onClick={() => setIsOpen(false)}>
+              <Button
+                variant="ghost"
+                className={`w-full justify-start rounded-none transition-colors ${
+                  isActive ? "bg-neutral-800 text-white hover:bg-neutral-900" : "text-foreground hover:bg-default-200"
+                }`}
+              >
+                <item.icon className="size-5" />
+                {item.label}
+              </Button>
+            </Link>
+          );
+        })}
+      </nav>
+
+      {/* Logout Button Pinned to Bottom */}
+      <div className="p-4 border-t border-default-200 mx-auto w-[70%] ">
+        <Button 
+          variant="ghost" 
+          className="w-full flex items-center text-center text-red-500 " 
+          startContent={<LogOut size={18} />}
+          onClick={handleLogout}
+        >
+         <LuCircleArrowOutDownLeft />  Logout
+        </Button>
       </div>
-      {navItems.map((item) => {
-        const isOverview = item.label === "Overview";
-        const isActive = isOverview ? pathname === item.link : pathname.startsWith(item.link);
-        return (
-          <Link key={item.label} href={item.link} onClick={() => setIsOpen(false)}>
-            <Button
-              variant="ghost"
-              className={`w-full justify-start rounded-none transition-colors ${
-                isActive ? "bg-neutral-800 text-white hover:bg-neutral-900" : "text-foreground hover:bg-default-200"
-              }`}
-            >
-              <item.icon className="size-5" />
-              {item.label}
-            </Button>
-          </Link>
-        );
-      })}
-    </nav>
+    </div>
   );
 
   return (
@@ -93,10 +129,7 @@ export default function DashboardSidebar() {
       {/* Mobile Drawer Overlay */}
       {isOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          {/* Backdrop */}
           <div className="fixed inset-0 bg-black/50" onClick={() => setIsOpen(false)} />
-          
-          {/* Content */}
           <div className="fixed left-0 top-0 bottom-0 w-64 bg-content1 shadow-2xl border-r border-default-200">
             <div className="flex justify-end p-4">
               <button onClick={() => setIsOpen(false)}><X /></button>

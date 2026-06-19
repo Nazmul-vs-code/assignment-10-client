@@ -4,9 +4,13 @@ import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from './Logo';
+import { usePathname } from 'next/navigation';
 
 const Footer = () => {
   const canvasRef = useRef(null);
+
+  const pathname = usePathname();
+  if (pathname.startsWith('/dashboard')) return null;
 
   useEffect(() => {
     const canvas = canvasRef.current;
