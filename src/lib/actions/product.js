@@ -50,3 +50,17 @@ export const updateProduct = async (id, updatedData) => {
     })
     return await res.json()
 }
+
+
+export const toggleProductStatus = async (id) => {
+    const { data: token } = await authClient.token();
+    
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/admin/products/toggle-status/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'authorization': `Bearer ${token?.token}`,
+        },
+    });
+
+    return await res.json();
+};
