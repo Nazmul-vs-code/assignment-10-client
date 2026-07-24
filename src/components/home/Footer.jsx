@@ -8,11 +8,11 @@ import { usePathname } from 'next/navigation';
 
 const Footer = () => {
   const canvasRef = useRef(null);
-
   const pathname = usePathname();
-  if (pathname.startsWith('/dashboard')) return null;
 
   useEffect(() => {
+    if (pathname.startsWith('/dashboard')) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -138,7 +138,9 @@ const Footer = () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, []);
+  }, [pathname]);
+
+  if (pathname.startsWith('/dashboard')) return null;
 
   return (
     // Vibrant deep space gradient that transitions down to a vivid glowing sunset base line
