@@ -3,7 +3,7 @@
 
 import { motion } from "framer-motion";
 
-export default function Loading() {
+export default function Loading() { 
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0a0a0a]">
       {/* Animated Red Ring */}
