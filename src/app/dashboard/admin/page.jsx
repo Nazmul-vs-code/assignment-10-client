@@ -21,7 +21,7 @@ const AdminDashboardHomePage = async () => {
     };
 
     return (
-        <div className="p-6 bg-zinc-950 min-h-screen text-white">
+        <div className="p-6 min-h-screen text-white">
             <h1 className="text-2xl font-bold mb-6">Admin Overview</h1>
             <AdminDashboardStats stats={stats} orders={orders} />
         </div>
