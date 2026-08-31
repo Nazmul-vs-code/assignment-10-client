@@ -3,9 +3,17 @@
 import Link from "next/link";
 import { ArrowUpRight, Mail, ShieldCheck, ShoppingBag } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+
+  const pathName = usePathname();
+  
+    if (pathName?.includes('/dashboard')) return null;
+
   return (
+
     <footer className="relative overflow-hidden bg-black text-zinc-400">
       {/* Red ambient glow */}
       <div className="pointer-events-none absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-red-600/10 blur-[120px]" />
