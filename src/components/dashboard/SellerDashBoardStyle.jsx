@@ -1,8 +1,13 @@
-'use client'; // This tells Next.js it's a client component
+'use client';
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Package, ShoppingCart, DollarSign, TrendingUp } from 'lucide-react';
+import {
+    Package,
+    ShoppingCart,
+    DollarSign,
+    TrendingUp,
+} from 'lucide-react';
 
 const SellerDashBoardStyle = ({ myOrdersData, myProducts }) => {
     const totalRevenue = myOrdersData.reduce((acc, order) => {
@@ -10,52 +15,245 @@ const SellerDashBoardStyle = ({ myOrdersData, myProducts }) => {
     }, 0);
 
     const stats = [
-        { label: 'Total Products', value: myProducts.length, icon: Package, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-        { label: 'Orders Received', value: myOrdersData.length, icon: ShoppingCart, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
-        { label: 'Total Revenue', value: `$${totalRevenue.toLocaleString()}`, icon: DollarSign, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+        {
+            label: 'Total Products',
+            value: myProducts.length,
+            description: 'Listed products',
+            icon: Package,
+            color: 'text-blue-400',
+            bg: 'bg-blue-500/10',
+            border: 'hover:border-blue-500/30',
+            glow: 'bg-blue-500/10',
+        },
+        {
+            label: 'Orders Received',
+            value: myOrdersData.length,
+            description: 'Processed orders',
+            icon: ShoppingCart,
+            color: 'text-emerald-400',
+            bg: 'bg-emerald-500/10',
+            border: 'hover:border-emerald-500/30',
+            glow: 'bg-emerald-500/10',
+        },
+        {
+            label: 'Total Revenue',
+            value: `$${totalRevenue.toLocaleString()}`,
+            description: 'Total earnings',
+            icon: DollarSign,
+            color: 'text-amber-400',
+            bg: 'bg-amber-500/10',
+            border: 'hover:border-amber-500/30',
+            glow: 'bg-amber-500/10',
+        },
     ];
 
+    const containerVariants = {
+        hidden: {},
+        show: {
+            transition: {
+                staggerChildren: 0.1,
+            },
+        },
+    };
+
+    const cardVariants = {
+        hidden: {
+            opacity: 0,
+            y: 20,
+            scale: 0.96,
+        },
+        show: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: {
+                duration: 0.45,
+                ease: 'easeOut',
+            },
+        },
+    };
+
     return (
-        <div className="p-8 bg-black min-h-screen text-white">
-            <motion.h1 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl font-black mb-8">
-                Seller Dashboard
-            </motion.h1>
+        <div className="min-h-full p-5 text-white sm:p-8">
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {stats.map((stat, index) => (
-                    <motion.div
-                        key={index}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl flex items-center gap-4 hover:border-zinc-700 transition"
-                    >
-                        <div className={`p-4 rounded-xl ${stat.bg}`}>
-                            <stat.icon className={`w-8 h-8 ${stat.color}`} />
-                        </div>
-                        <div>
-                            <p className="text-zinc-400 text-sm">{stat.label}</p>
-                            <h2 className="text-3xl font-black">{stat.value}</h2>
-                        </div>
-                    </motion.div>
-                ))}
-            </div>
-
-            <motion.div 
-                initial={{ opacity: 0, y: 20 }}
+            {/* ================= Header ================= */}
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="mt-8 bg-zinc-900 border border-zinc-800 p-8 rounded-2xl"
+                transition={{ duration: 0.5 }}
+                className="mb-8"
             >
-                <div className="flex items-center gap-2 mb-4">
-                    <TrendingUp className="text-emerald-500" />
-                    <h3 className="font-bold text-lg">Performance Summary</h3>
-                </div>
-                <p className="text-zinc-400">
-                    You have listed <span className="text-white font-bold">{myProducts.length}</span> items 
-                    and successfully processed <span className="text-white font-bold">{myOrdersData.length}</span> orders.
+                <p className="mb-1 text-sm font-medium text-zinc-500">
+                    Overview
+                </p>
+
+                <h1 className="text-3xl font-black tracking-tight sm:text-4xl">
+                    Seller Dashboard
+                </h1>
+
+                <p className="mt-2 text-sm text-zinc-500">
+                    Keep track of your products, orders, and earnings.
                 </p>
             </motion.div>
+
+
+            {/* ================= Stats ================= */}
+            <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="show"
+                className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+            >
+                {stats.map((stat) => {
+                    const Icon = stat.icon;
+
+                    return (
+                        <motion.div
+                            key={stat.label}
+                            variants={cardVariants}
+                            whileHover={{
+                                y: -5,
+                                transition: { duration: 0.2 },
+                            }}
+                            className={`group relative overflow-hidden rounded-2xl border border-zinc-800/80 bg-zinc-950/70 p-5 shadow-xl backdrop-blur-xl transition-all duration-300 ${stat.border}`}
+                        >
+
+                            {/* Background Glow */}
+                            <div
+                                className={`pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl transition-all duration-500 group-hover:scale-125 ${stat.glow}`}
+                            />
+
+                            <div className="relative flex items-center justify-between gap-4">
+
+                                {/* Information */}
+                                <div className="min-w-0 flex-1">
+
+                                    <p className="text-sm font-medium text-zinc-500">
+                                        {stat.label}
+                                    </p>
+
+                                    <h2
+                                        className={`mt-2 truncate text-2xl font-black tracking-tight sm:text-3xl ${stat.label === 'Total Revenue'
+                                                ? 'text-amber-400'
+                                                : 'text-white'
+                                            }`}
+                                        title={String(stat.value)}
+                                    >
+                                        {stat.value}
+                                    </h2>
+
+                                    <p className="mt-1 text-xs text-zinc-600">
+                                        {stat.description}
+                                    </p>
+
+                                </div>
+
+
+                                {/* Icon */}
+                                <div
+                                    className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/5 ${stat.bg}`}
+                                >
+                                    <Icon
+                                        className={`h-6 w-6 ${stat.color}`}
+                                    />
+                                </div>
+
+                            </div>
+                        </motion.div>
+                    );
+                })}
+            </motion.div>
+
+
+            {/* ================= Performance Summary ================= */}
+            <motion.div
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                    duration: 0.5,
+                    delay: 0.4,
+                }}
+                className="group relative mt-6 overflow-hidden rounded-2xl border border-zinc-800/80 bg-zinc-950/70 p-6 shadow-xl backdrop-blur-xl sm:p-8"
+            >
+
+                {/* Green Glow */}
+                <div className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-emerald-500/5 blur-3xl transition-all duration-500 group-hover:bg-emerald-500/10" />
+
+                <div className="relative">
+
+                    {/* Header */}
+                    <div className="mb-5 flex items-center gap-3">
+
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10">
+                            <TrendingUp className="h-5 w-5 text-emerald-400" />
+                        </div>
+
+                        <div>
+                            <h3 className="font-bold text-white">
+                                Performance Summary
+                            </h3>
+
+                            <p className="text-xs text-zinc-600">
+                                Your current marketplace activity
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    {/* Summary */}
+                    <p className="text-sm leading-7 text-zinc-400">
+                        You have listed{' '}
+                        <span className="font-bold text-white">
+                            {myProducts.length}
+                        </span>{' '}
+                        {myProducts.length === 1 ? 'item' : 'items'} and
+                        successfully processed{' '}
+                        <span className="font-bold text-white">
+                            {myOrdersData.length}
+                        </span>{' '}
+                        {myOrdersData.length === 1 ? 'order' : 'orders'}.
+                    </p>
+
+
+                    {/* Mini Stats */}
+                    <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+
+                        <div className="rounded-xl border border-zinc-800/70 bg-white/[0.02] p-4">
+                            <p className="text-xs text-zinc-600">
+                                Products
+                            </p>
+
+                            <p className="mt-1 text-lg font-bold text-blue-400">
+                                {myProducts.length}
+                            </p>
+                        </div>
+
+                        <div className="rounded-xl border border-zinc-800/70 bg-white/[0.02] p-4">
+                            <p className="text-xs text-zinc-600">
+                                Orders
+                            </p>
+
+                            <p className="mt-1 text-lg font-bold text-emerald-400">
+                                {myOrdersData.length}
+                            </p>
+                        </div>
+
+                        <div className="col-span-2 rounded-xl border border-zinc-800/70 bg-white/[0.02] p-4 sm:col-span-1">
+                            <p className="text-xs text-zinc-600">
+                                Revenue
+                            </p>
+
+                            <p className="mt-1 truncate text-lg font-bold text-amber-400">
+                                ${totalRevenue.toLocaleString()}
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </motion.div>
+
         </div>
     );
 };

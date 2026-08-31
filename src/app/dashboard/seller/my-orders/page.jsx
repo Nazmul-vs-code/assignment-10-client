@@ -8,7 +8,7 @@ const MyOrderPage = async () => {
     const myOrders = await getMyOrders(token);
 
     return (
-        <div className="p-8 bg-black min-h-screen text-white">
+        <div className="p-8 min-h-screen text-white">
             <h1 className="text-2xl font-bold mb-6">Orders Received</h1>
             <div className="flex flex-col gap-4">
                 {myOrders.length > 0 ? (

@@ -3,14 +3,13 @@
 import Link from "next/link";
 import { ArrowUpRight, Mail, ShieldCheck, ShoppingBag } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
 
 const Footer = () => {
 
   const pathName = usePathname();
   
-    if (pathName?.includes('/dashboard')) return null;
+  if (pathName?.includes('/dashboard')) return null;
 
   return (
 

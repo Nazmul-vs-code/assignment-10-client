@@ -32,7 +32,7 @@ const AnalyticsPage = () => {
     const COLORS = ['#FF8042', '#00C49F', '#0088FE'];
 
     return (
-        <div className="p-8 bg-black min-h-screen text-white">
+        <div className="p-8 min-h-screen text-white">
             <h1 className="text-2xl font-bold mb-6">Sales Analytics</h1>
 
             {/* Text Summary Section */}

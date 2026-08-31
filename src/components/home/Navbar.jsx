@@ -13,7 +13,8 @@ import Logo from "./Logo";
 const NAV_LINKS = [
   { name: "Home", href: "/" },
   { name: "Products", href: "/products" },
-  { name: "Categories", href: "/categories" },
+  { name: "About Us", href: "/about-us" },
+  { name: "404", href: "/404" },
 ];
 
 const Navbar = () => {
