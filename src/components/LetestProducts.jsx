@@ -26,7 +26,7 @@ const LetestProducts = () => {
     }, []); // The empty array [] ensures this runs ONLY ONCE on mount
 
     if (loading) {
-        return <div className="max-w-7xl mx-auto px-4 py-16">Loading latest products...</div>;
+        return <div className="mx-auto px-4 py-16">Loading latest products...</div>;
     }
 
     return (

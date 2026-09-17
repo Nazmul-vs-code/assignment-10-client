@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight, Mail, ShieldCheck, ShoppingBag } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { usePathname } from "next/navigation";
+import Logo from "./Logo";
 
 const Footer = () => {
 
@@ -21,7 +22,7 @@ const Footer = () => {
       {/* Top red line */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-red-600 to-transparent" />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-16 md:px-10">
+      <div className="relative mx-auto max-w-[97%] px-6 py-16 md:px-10">
         {/* Main footer content */}
         <div className="grid gap-12 md:grid-cols-12">
           {/* Brand */}
@@ -30,18 +31,7 @@ const Footer = () => {
               href="/"
               className="group inline-flex items-center gap-3"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-red-500/20 bg-red-500/10 transition-all duration-300 group-hover:border-red-500/50 group-hover:bg-red-500/15">
-                <ShoppingBag className="h-5 w-5 text-red-500" />
-              </div>
-
-              <div>
-                <h2 className="text-xl font-bold tracking-tight text-white">
-                  ReSell<span className="text-red-500"> Hub</span>
-                </h2>
-                <p className="text-[11px] uppercase tracking-[0.25em] text-zinc-600">
-                  Tech Marketplace
-                </p>
-              </div>
+              <Logo/>
             </Link>
 
             <p className="mt-6 max-w-md text-sm leading-7 text-zinc-500">

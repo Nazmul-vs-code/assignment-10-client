@@ -1,64 +1,76 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Avatar, Button, Card } from "@heroui/react";
-import { DollarSign, Tag, User, Eye, Heart } from "lucide-react";
-import { motion } from "framer-motion";
+
+import { Avatar } from "@heroui/react";
+
+import {
+  DollarSign,
+  Tag,
+  Heart,
+  ArrowUpRight,
+} from "lucide-react";
+
 import Link from "next/link";
+
 import { addWishList } from "@/lib/actions/wishlist";
 import { authClient } from "@/lib/auth-client";
 import { getWishlist } from "@/lib/api/wishlist";
+
 import toast from "react-hot-toast";
 
 export const ProductCard = ({ product }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  
   useEffect(() => {
-  const checkLikeStatus = async () => {
-    const { data: session } = await authClient.token();
-    if (session?.token) {
-      const list = await getWishlist(session.token);
-      // Check if this specific product is in the user's wishlist
-      const isAlreadyLiked = list.some(item => item.productId === product._id);
-      setIsLiked(isAlreadyLiked);
-    }
-  };
-  checkLikeStatus();
-}, [product._id]);
+    const checkLikeStatus = async () => {
+      const { data: session } = await authClient.token();
 
-  // console.log("My wishlishts here : ", getMyWishlists())
-  
+      if (session?.token) {
+        const list = await getWishlist(session.token);
+
+        const isAlreadyLiked = list.some(
+          (item) => item.productId === product._id
+        );
+
+        setIsLiked(isAlreadyLiked);
+      }
+    };
+
+    checkLikeStatus();
+  }, [product._id]);
+
   const handleLike = async () => {
-    // 1. Set loading state to prevent double-clicks
-    
-    const { data: session } = await authClient.token()
-    const token = session?.token
-    // console.log(session?.token , ' token ')
+    const { data: session } = await authClient.token();
+
+    const token = session?.token;
+
+    if (!token) {
+      toast.error("Please login to use wishlist");
+      return;
+    }
 
     setIsLoading(true);
-    
-    // 2. Optimistic UI update
     setIsLiked((prev) => !prev);
 
-    // 3. Prepare payload
     const productData = {
       productId: product._id,
       productTitle: product.title,
       productImage: product.images?.[0],
       productPrice: product.price,
-      productCategory: product.category
+      productCategory: product.category,
     };
 
     try {
-      // 4. Call Server Action
-      const res = await addWishList(productData , token);
-      res.inserted ? toast.success("wish list added") : toast.error("Wishlist was removed!")
-      console.log("Wishlist response:", res);
+      const res = await addWishList(productData, token);
+
+      res.inserted
+        ? toast.success("Wishlist added")
+        : toast.error("Wishlist was removed!");
     } catch (error) {
       console.error("Failed to update wishlist:", error);
-      // Revert if error occurs
+
       setIsLiked((prev) => !prev);
     } finally {
       setIsLoading(false);
@@ -66,79 +78,107 @@ export const ProductCard = ({ product }) => {
   };
 
   return (
-    <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }}>
-      <Card className="relative flex flex-col gap-3 p-4 w-full rounded-2xl bg-zinc-900 border border-zinc-800 shadow-none">
-        {/* Image Section */}
-        <div className="relative overflow-hidden h-52 rounded-lg bg-violet-900">
-          <img
-            src={product.images?.[0] || "/placeholder.png"}
-            alt={product.title}
-            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-          />
+    <div className="product-card-parent">
+      <article className="product-card">
+        {/* Ambient glow */}
+        <div className="product-card-glow" />
 
-          {/* Category Badge */}
-          <div className="absolute top-3 left-3 flex items-center gap-1 rounded-md bg-black/40 px-2 py-1 text-[11px] text-zinc-100 backdrop-blur">
-            <Tag size={12} />
-            {product.category || "General"}
-          </div>
+        {/* Glass surface */}
+        <div className="product-card-glass" />
 
-          {/* Like Button */}
-          <button
-            disabled={isLoading}
-            onClick={handleLike}
-            className="absolute top-3 right-3 flex items-center justify-center h-9 w-9 rounded-full bg-black/40 backdrop-blur transition-transform hover:scale-110 disabled:opacity-50"
-          >
-            <Heart
-              size={18}
-              className={isLiked ? "fill-red-500 text-red-500" : "text-zinc-300"}
+        {/* Decorative 3D circles */}
+        <div className="product-card-orbit">
+          <span className="product-circle product-circle-1" />
+          <span className="product-circle product-circle-2" />
+          <span className="product-circle product-circle-3" />
+          <span className="product-circle product-circle-4" />
+
+          <span className="product-price-orb">
+            <DollarSign size={15} strokeWidth={2.5} />
+          </span>
+        </div>
+
+        {/* Main content */}
+        <div className="product-card-content">
+          {/* Product image */}
+          <div className="product-image-wrapper">
+            <img
+              src={product.images?.[0] || "/placeholder.png"}
+              alt={product.title}
+              className="product-image"
             />
-          </button>
-        </div>
 
-        {/* Content Section */}
-        <div>
-          <h3 className="truncate text-lg font-semibold text-zinc-100">{product.title}</h3>
-          <p className="mt-1 line-clamp-2 text-sm text-zinc-400">{product.description}</p>
-        </div>
+            <div className="product-image-overlay" />
 
-        {/* Tags Section */}
-        <div>
-          <span className="text-black bg-yellow-300 p-1 text-[10px] uppercase font-bold">Category</span>
-          <div className="mt-2 flex flex-wrap gap-2">
-            <div className="px-3 py-2 text-xs rounded-md bg-zinc-800 border-2 border-zinc-800 text-zinc-200">
-              {product.category || "General"}
+            {/* Category */}
+            <div className="product-category">
+              <Tag size={11} strokeWidth={2.5} />
+              <span>
+                {product.category || "General"}
+              </span>
             </div>
-            <div className="px-3 py-2 text-xs rounded-md bg-zinc-800 border-2 border-zinc-800 text-zinc-200">
-              Product
+
+            {/* Wishlist */}
+            <button
+              type="button"
+              disabled={isLoading}
+              onClick={handleLike}
+              className={`product-wishlist ${
+                isLiked ? "product-wishlist-active" : ""
+              }`}
+              aria-label="Add to wishlist"
+            >
+              <Heart
+                size={16}
+                strokeWidth={2.2}
+                fill={isLiked ? "currentColor" : "none"}
+              />
+            </button>
+          </div>
+
+          {/* Product information */}
+          <div className="product-card-info">
+            <h3 className="product-card-title">
+              {product.title}
+            </h3>
+
+            <p className="product-card-description">
+              {product.description}
+            </p>
+          </div>
+
+          {/* Footer */}
+          <div className="product-card-footer">
+            {/* Seller */}
+            <div className="product-seller">
+              <Avatar className="product-seller-avatar">
+                <Avatar.Fallback>
+                  {product.sellerInfo?.name?.charAt(0) || "S"}
+                </Avatar.Fallback>
+              </Avatar>
+
+              <span className="product-seller-name">
+                {product.sellerInfo?.name || "Seller"}
+              </span>
             </div>
+
+            {/* View */}
+            <Link
+              href={`/products/${product._id}`}
+              className="product-view-button"
+            >
+              <span>View</span>
+
+              <span className="product-view-icon">
+                <ArrowUpRight size={15} />
+              </span>
+            </Link>
           </div>
         </div>
 
-        {/* Footer Section */}
-        <div className="flex items-center justify-between mt-auto pt-2">
-          <div className="flex items-center font-bold text-2xl text-zinc-100">
-            <DollarSign size={20} />
-            {product.price?.toLocaleString()}
-          </div>
-          
-          <Link href={`/products/${product._id}`}>
-            <Button variant="solid" className="rounded-none bg-red-600 text-white hover:bg-red-700">
-              <Eye size={16} /> View
-            </Button>
-          </Link>
-        </div>
-
-        {/* Seller Info */}
-        <div className="flex items-center gap-2 pt-2 border-t border-zinc-800">
-          <Avatar className="size-8 bg-zinc-700 text-zinc-200">
-            <Avatar.Fallback>{product.sellerInfo?.name?.charAt(0) || "S"}</Avatar.Fallback>
-          </Avatar>
-          <div className="flex items-center gap-1 text-xs text-zinc-400">
-            <User size={12} />
-            {product.sellerInfo?.name}
-          </div>
-        </div>
-      </Card>
-    </motion.div>
+        {/* Bottom reflection */}
+        <div className="product-card-reflection" />
+      </article>
+    </div>
   );
 };
