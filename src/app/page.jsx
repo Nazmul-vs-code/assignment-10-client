@@ -8,7 +8,7 @@ import PopulerCategories from "@/components/PopulerCategories";
 
 export default function Home() {
   return (
-    <div className="w-[80%] mx-auto flex flex-col gap-4 mb-9">
+    <div className="w-[97%] mx-auto flex flex-col gap-4 mb-9">
       <BannerSlider/>
       <LetestProducts />
       <PopulerCategories />

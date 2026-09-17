@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Repeat } from "lucide-react";
+import { ShoppingBag } from "lucide-react"; // Changed from Repeat
 
 const Logo = () => {
   return (
@@ -12,15 +12,15 @@ const Logo = () => {
     >
       <motion.div
         whileHover={{ rotate: 180 }}
-        className="p-1.5 bg-emerald-500 rounded-lg text-white"
+        // Removed p-1.5, bg-emerald-500, rounded-lg, text-white
+        // Kept only the base motion.div structure and the new icon
       >
-        <Repeat size={20} />
+        <ShoppingBag size={32} className="text-red-600" /> {/* Increased size and set color to match photo */}
       </motion.div>
 
       <span className="text-2xl tracking-tighter">
-        <span className="text-emerald-600">Re</span>
-        <span className="text-orange-500">Sell</span>
-        <span className="text-indigo-600">Hub</span>
+        <span className="text-red-500">Reell</span>
+        <span className="text-white">Hub</span>
       </span>
     </motion.div>
   );
