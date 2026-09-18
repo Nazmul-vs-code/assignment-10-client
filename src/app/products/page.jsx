@@ -1,7 +1,7 @@
 import { getPublicProducts } from "@/lib/api/products";
-import { ProductCard } from "@/components/ProductCard";
 import Filtering from "@/components/Filtering";
 import PaginationControls from "@/components/PaginationControls";
+import { ProductCard } from "@/components/product/ProductCard";
 
 const ITEMS_PER_PAGE = 6;
 

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { Avatar } from "@heroui/react";
+import "./ProductCard.css";
 
 import {
   DollarSign,

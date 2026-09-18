@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getPublicProducts } from '@/lib/api/products';
-import { ProductCard } from './ProductCard';
+import { ProductCard } from './product/ProductCard';
 
 const LetestProducts = () => {
     const [products, setProducts] = useState([]);
