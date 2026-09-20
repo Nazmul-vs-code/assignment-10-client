@@ -1,9 +1,6 @@
 @import "tailwindcss";
 @import "@heroui/styles";
 
-
-@import "tailwindcss";
-
 :root {
   --color-red: #ef4444;
   --color-red-dark: #991b1b;
@@ -15,11 +12,19 @@
 
   --glass-bg: rgba(255, 255, 255, 0.045);
   --glass-border: rgba(255, 255, 255, 0.16);
+  --font-main: "myfont", "Segoe UI", sans-serif;
 }
 
+@font-face {
+  font-family: "myfont";
+  src: url("/fonts/myfont.otf") format("opentype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+html,
 body {
-  margin: 0;
-  background: var(--color-bg);
-  color: var(--color-white);
-  font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-main);
+  letter-spacing: -0.01em;
 }

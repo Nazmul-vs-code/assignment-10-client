@@ -1,98 +1,88 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Environment } from "@react-three/drei";
-import { useRef } from "react";
-import * as THREE from "three";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
-const HeroObject = () => {
-  const meshRef = useRef(null);
-
-  useFrame((state) => {
-    if (!meshRef.current) return;
-
-    meshRef.current.rotation.y += 0.004;
-
-    meshRef.current.position.y =
-      Math.sin(state.clock.elapsedTime * 1.5) * 0.08;
-  });
-
-  return (
-    <Float
-      speed={1.5}
-      rotationIntensity={0.15}
-      floatIntensity={0.25}
-    >
-      <mesh ref={meshRef}>
-        <boxGeometry args={[1.8, 0.9, 1]} />
-
-        <meshStandardMaterial
-          color="#181818"
-          metalness={0.9}
-          roughness={0.18}
-        />
-      </mesh>
-    </Float>
-  );
-};
-
-const Road = () => {
-  return (
-    <mesh
-      rotation={[-Math.PI / 2, 0, 0]}
-      position={[0, -1.1, 0]}
-    >
-      <planeGeometry args={[12, 5]} />
-
-      <meshStandardMaterial
-        color="#080808"
-        metalness={0.75}
-        roughness={0.25}
-      />
-    </mesh>
-  );
-};
+const products = [
+  {
+    id: 1,
+    title: "Premium Headphones",
+    category: "Electronics",
+    price: "$89",
+    image:
+      "https://images.pexels.com/photos/15487609/pexels-photo-15487609.jpeg",
+  },
+  {
+    id: 2,
+    title: "Classic Red Bag",
+    category: "Fashion",
+    price: "$45",
+    image:
+      "https://images.pexels.com/photos/22434764/pexels-photo-22434764.jpeg",
+  },
+  {
+    id: 3,
+    title: "Lovely Companion",
+    category: "Lifestyle",
+    price: "$35",
+    image:
+      "https://images.pexels.com/photos/38728868/pexels-photo-38728868.jpeg",
+  },
+];
 
 const HeroScene = () => {
+  const [activeCard, setActiveCard] = useState(null);
+
   return (
     <div className="hero-scene">
-      <Canvas
-        camera={{
-          position: [0, 1.1, 5.8],
-          fov: 42,
-        }}
-        dpr={[1, 1.5]}
-      >
-        {/* Lighting */}
-        <ambientLight intensity={0.6} />
+      {/* 3D WATER BALLS */}
+      <div className="scene-water-ball scene-water-ball-one" />
+      <div className="scene-water-ball scene-water-ball-two" />
+      <div className="scene-water-ball scene-water-ball-three" />
 
-        <directionalLight
-          position={[4, 5, 4]}
-          intensity={2}
-        />
+      {/* PRODUCT CARDS */}
+      <div className="hero-card-stack">
+        {products.map((product, index) => {
+          const active = activeCard === product.id;
 
-        <pointLight
-          position={[2, 1, 2]}
-          intensity={5}
-          distance={8}
-          color="#ff3333"
-        />
+          return (
+            <motion.article
+              key={product.id}
+              className={`hero-product-card hero-product-card-${index + 1}`}
+              onMouseEnter={() => setActiveCard(product.id)}
+              onMouseLeave={() => setActiveCard(null)}
+              animate={{
+                scale: active ? 1.08 : 1,
+                x: active ? -15 : 0,
+                y: active ? -25 : 0,
+                rotateZ: active ? 0 : index === 0 ? -7 : index === 1 ? 1 : 7,
+                z: active ? 100 : 0,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 180,
+                damping: 18,
+              }}
+            >
+              <div className="hero-card-image">
+                <img src={product.image} alt={product.title} />
 
-        <pointLight
-          position={[-3, 2, 1]}
-          intensity={3}
-          distance={7}
-          color="#ffffff"
-        />
+                <div className="hero-card-number">
+                  0{index + 1}
+                </div>
+              </div>
 
-        {/* Environment */}
-        <Environment preset="city" />
+              <div className="hero-card-content">
+                <span>{product.category}</span>
 
-        {/* Objects */}
-        <HeroObject />
+                <h3>{product.title}</h3>
 
-        <Road />
-      </Canvas>
+                <strong>{product.price}</strong>
+              </div>
+            </motion.article>
+          );
+        })}
+      </div>
     </div>
   );
 };

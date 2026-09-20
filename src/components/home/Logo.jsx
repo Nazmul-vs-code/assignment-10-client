@@ -19,7 +19,7 @@ const Logo = () => {
       </motion.div>
 
       <span className="text-2xl tracking-tighter">
-        <span className="text-red-500">Reel</span>
+        <span className="text-red-500">Resel</span>
         <span className="text-yellow-500">Hub</span>
       </span>
     </motion.div>

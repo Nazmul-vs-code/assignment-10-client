@@ -1,100 +1,84 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowUpRight, ShoppingBag, Store } from "lucide-react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 import HeroScene from "./HeroScene";
 import "./Hero.css";
 
 const Hero = () => {
+  const [mouse, setMouse] = useState({
+    x: 50,
+    y: 50,
+  });
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      setMouse({
+        x: (event.clientX / window.innerWidth) * 100,
+        y: (event.clientY / window.innerHeight) * 100,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
   return (
     <section className="hero">
-      {/* Background atmosphere */}
-      <div className="hero-bg-glow hero-bg-glow-left" />
-      <div className="hero-bg-glow hero-bg-glow-right" />
-
-      <div className="hero-grid" />
-
       <div className="hero-container">
-        {/* Left Content */}
+        {/* LEFT */}
         <div className="hero-content">
-          <div className="hero-eyebrow">
-            <span className="hero-eyebrow-dot" />
-            <span>THE FUTURE OF RESALE</span>
-          </div>
+          <motion.h3
+            className="hero-logo"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="hero-logo-resel">Resel</span>
+            <span className="hero-logo-hub">Hub</span>
+          </motion.h3>
 
-          <h1 className="hero-title">
-            Buy. Sell.
-            <span> Discover Again.</span>
-          </h1>
-
-          <p className="hero-description">
-            Discover products you love, sell what you no longer need,
-            and experience a smarter way to buy and sell online.
-          </p>
-
-          <div className="hero-actions">
-            <Link href="/products" className="hero-primary-button">
-              <ShoppingBag size={18} />
-              <span>Explore Products</span>
-
-              <span className="hero-button-icon">
-                <ArrowUpRight size={15} />
-              </span>
-            </Link>
-
-            <Link href="/dashboard/seller" className="hero-secondary-button">
-              <Store size={17} />
-              <span>Start Selling</span>
-            </Link>
-          </div>
-
-          {/* Small stats */}
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <strong>10K+</strong>
-              <span>Products</span>
-            </div>
-
-            <div className="hero-stat-divider" />
-
-            <div className="hero-stat">
-              <strong>2K+</strong>
-              <span>Sellers</span>
-            </div>
-
-            <div className="hero-stat-divider" />
-
-            <div className="hero-stat">
-              <strong>24/7</strong>
-              <span>Marketplace</span>
-            </div>
-          </div>
+          <motion.h2
+            className="hero-title"
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.15 }}
+          >
+            Your modern
+            <br />
+            business hub
+            <br />
+            for everything resale.
+          </motion.h2>
         </div>
 
-        {/* 3D Scene */}
+        {/* RIGHT */}
         <div className="hero-visual">
+          {/* Mouse-following water */}
+          <motion.div
+            className="hero-water-ball"
+            animate={{
+              left: `${mouse.x}%`,
+              top: `${mouse.y}%`,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 30,
+              damping: 20,
+              mass: 1.2,
+            }}
+          >
+            <div className="water-ball-highlight" />
+            <div className="water-ball-inner" />
+          </motion.div>
+
           <HeroScene />
-
-          {/* Glass floating labels */}
-          <div className="hero-floating-card hero-floating-card-price">
-            <span className="hero-floating-label">TRENDING</span>
-            <strong>$129</strong>
-            <span>Smart deals</span>
-          </div>
-
-          <div className="hero-floating-card hero-floating-card-sell">
-            <span className="hero-floating-icon">↗</span>
-            <div>
-              <strong>Sell Faster</strong>
-              <span>Reach more buyers</span>
-            </div>
-          </div>
         </div>
       </div>
-
-      {/* Bottom fade */}
-      <div className="hero-bottom-fade" />
     </section>
   );
 };

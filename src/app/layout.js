@@ -1,13 +1,8 @@
-import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/home/Navbar";
 import Footer from "@/components/home/Footer";
 import { Toaster } from "react-hot-toast";
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-jakarta",
-});
 
 export const metadata = {
   title: "Create Next App",
@@ -19,9 +14,9 @@ export default function RootLayout({ children }) {
     <html
       data-theme="dark"
       lang="en"
-      className={`${jakarta.variable} h-full antialiased`}
+      className={`h-full antialiased`}
     >
-      <body className="font-[family:var(--font-jakarta)] min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col">
         <Navbar />
 
         <main className="flex-1">
