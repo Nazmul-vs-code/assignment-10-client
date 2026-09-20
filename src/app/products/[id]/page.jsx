@@ -12,8 +12,11 @@ import {
   Mail,
   ChevronLeft,
   ChevronRight,
+  Sparkles,
 } from "lucide-react";
+
 import { getProductById } from "@/lib/api/products";
+import "./ProductDetail.css";
 
 const ProductDetailsPage = ({ params }) => {
   const [product, setProduct] = useState(null);
@@ -22,6 +25,7 @@ const ProductDetailsPage = ({ params }) => {
     const fetchProduct = async () => {
       const resolvedParams = await params;
       const data = await getProductById(resolvedParams.id);
+
       setProduct(data);
     };
 
@@ -30,252 +34,296 @@ const ProductDetailsPage = ({ params }) => {
 
   if (!product) {
     return (
-      <div className="flex items-center justify-center min-h-[70vh]">
-        <p className="text-lg text-neutral-500">
+      <main className="product-detail-loading">
+        <motion.div
+          className="product-loading-orb"
+          animate={{
+            scale: [1, 1.15, 1],
+            opacity: [0.4, 0.8, 0.4],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
           Loading product details...
-        </p>
-      </div>
+        </motion.p>
+      </main>
     );
   }
 
   return (
     <motion.main
+      className="product-detail-page"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="w-[90%] max-w-7xl mx-auto py-10"
+      transition={{ duration: 0.7 }}
     >
-      <div
-        className="
-          overflow-hidden
-          rounded-[32px]
-          border
-          border-neutral-200
-          bg-white
-          shadow-xl
-          grid
-          grid-cols-1
-          lg:grid-cols-[60%_40%]
-        "
-      >
-        {/* Left Section */}
-        <motion.div
-          initial={{ x: -40, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="
-            relative
-            bg-slate-100
-            min-h-[700px]
-            flex
-            items-center
-            justify-center
-            p-10
-          "
-        >
-          <button
-            className="
-              absolute
-              left-6
-              top-1/2
-              -translate-y-1/2
-              h-12
-              w-12
-              rounded-full
-              bg-white
-              shadow-md
-              flex
-              items-center
-              justify-center
-              text-neutral-500
-            "
-          >
-            <ChevronLeft />
-          </button>
+      {/* Background atmosphere */}
 
-          <img
-            src={product.images?.[0]}
-            alt={product.title}
-            className="
-              max-h-[550px]
-              object-contain
-              transition-transform
-              duration-500
-              hover:scale-105
-            "
+      <div className="product-detail-glow product-detail-glow-one" />
+      <div className="product-detail-glow product-detail-glow-two" />
+
+      <motion.div
+        className="product-detail-container"
+        initial={{ opacity: 0, y: 40, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{
+          duration: 0.8,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+      >
+        {/* =====================================================
+            IMAGE SECTION
+        ===================================================== */}
+
+        <motion.section
+          className="product-detail-gallery"
+          initial={{ x: -60, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{
+            duration: 0.8,
+            delay: 0.1,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <div className="gallery-top-line">
+            <span>
+              <Sparkles size={14} />
+              Premium Listing
+            </span>
+
+            <span className="gallery-number">01 / 01</span>
+          </div>
+
+          {/* Decorative liquid balls */}
+
+          <motion.div
+            className="gallery-orb gallery-orb-one"
+            animate={{
+              y: [0, -18, 0],
+              rotate: [0, 10, 0],
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           />
 
-          <button
-            className="
-              absolute
-              right-6
-              top-1/2
-              -translate-y-1/2
-              h-12
-              w-12
-              rounded-full
-              bg-white
-              shadow-md
-              flex
-              items-center
-              justify-center
-              text-neutral-500
-            "
-          >
-            <ChevronRight />
-          </button>
-        </motion.div>
+          <motion.div
+            className="gallery-orb gallery-orb-two"
+            animate={{
+              y: [0, 15, 0],
+              x: [0, 8, 0],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1,
+            }}
+          />
 
-        {/* Right Section */}
-        <motion.div
-          initial={{ x: 40, opacity: 0 }}
+          {/* Main image */}
+
+          <motion.div
+            className="product-image-wrapper"
+            whileHover={{
+              scale: 1.025,
+            }}
+            transition={{
+              duration: 0.5,
+              ease: "easeOut",
+            }}
+          >
+            <div className="product-image-shine" />
+
+            <img
+              src={product.images?.[0]}
+              alt={product.title}
+              className="product-detail-image"
+            />
+          </motion.div>
+
+          {/* Navigation */}
+
+          <motion.button
+            type="button"
+            className="gallery-nav gallery-nav-left"
+            whileHover={{ x: -3 }}
+            whileTap={{ scale: 0.92 }}
+          >
+            <ChevronLeft size={21} />
+          </motion.button>
+
+          <motion.button
+            type="button"
+            className="gallery-nav gallery-nav-right"
+            whileHover={{ x: 3 }}
+            whileTap={{ scale: 0.92 }}
+          >
+            <ChevronRight size={21} />
+          </motion.button>
+
+          <div className="gallery-bottom-line">
+            <span>Authentic marketplace listing</span>
+
+            <span className="gallery-status">
+              <span />
+              Available
+            </span>
+          </div>
+        </motion.section>
+
+        {/* =====================================================
+            INFORMATION SECTION
+        ===================================================== */}
+
+        <motion.section
+          className="product-detail-info"
+          initial={{ x: 60, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="p-10 lg:p-12 flex flex-col"
+          transition={{
+            duration: 0.8,
+            delay: 0.2,
+            ease: [0.22, 1, 0.36, 1],
+          }}
         >
           {/* Category */}
-          <div
-            className="
-              inline-flex
-              items-center
-              gap-2
-              text-red-500
-              font-semibold
-              uppercase
-              tracking-widest
-              text-sm
-            "
+
+          <motion.div
+            className="product-category"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
           >
-            <Tag size={16} />
+            <Tag size={15} />
             {product.category}
-          </div>
+          </motion.div>
 
           {/* Title */}
-          <h1 className="mt-4 text-4xl lg:text-5xl font-black leading-tight text-neutral-800">
+
+          <motion.h1
+            className="product-detail-title"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45 }}
+          >
             {product.title}
-          </h1>
+          </motion.h1>
 
           {/* Description */}
-          <div className="mt-8">
-            <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-3">
-              Description
-            </h3>
 
-            <p className="text-neutral-600 leading-8">
-              {product.description}
-            </p>
-          </div>
+          <motion.div
+            className="product-description"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <span className="product-section-label">Description</span>
 
-          {/* Divider */}
-          <div className="my-8 border-t border-neutral-200" />
+            <p>{product.description}</p>
+          </motion.div>
 
           {/* Price */}
-          <div>
-            <p className="text-xs uppercase tracking-widest text-neutral-400 mb-2">
-              Price
-            </p>
 
-            <div className="flex items-center gap-2">
-              <DollarSign
-                size={32}
-                className="text-emerald-500"
-              />
-
-              <span className="text-5xl font-black text-neutral-800">
-                {product.price?.toLocaleString()}
-              </span>
-            </div>
-          </div>
-
-          {/* Seller Info */}
-          <div
-            className="
-              mt-8
-              rounded-2xl
-              border
-              border-neutral-200
-              bg-neutral-50
-              p-6
-            "
+          <motion.div
+            className="product-price-section"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55 }}
           >
-            <div className="flex items-center gap-2 mb-5">
-              <User size={18} className="text-red-500" />
+            <span className="product-section-label">Current Price</span>
 
-              <h3 className="font-semibold text-neutral-800">
-                Seller Information
-              </h3>
+            <div className="product-price">
+              <DollarSign size={28} />
+
+              <span>{product.price?.toLocaleString()}</span>
+            </div>
+          </motion.div>
+
+          {/* Divider */}
+
+          <div className="product-detail-divider" />
+
+          {/* Seller */}
+
+          <motion.div
+            className="seller-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+          >
+            <div className="seller-card-header">
+              <div className="seller-icon">
+                <User size={18} />
+              </div>
+
+              <div>
+                <span>Seller</span>
+                <h3>{product.sellerInfo?.name}</h3>
+              </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
-                  <User
-                    size={18}
-                    className="text-red-500"
-                  />
-                </div>
-
-                <div>
-                  <p className="text-xs text-neutral-400">
-                    Seller Name
-                  </p>
-
-                  <p className="font-semibold text-neutral-800">
-                    {product.sellerInfo?.name}
-                  </p>
-                </div>
+            <div className="seller-contact-list">
+              <div className="seller-contact">
+                <Mail size={16} />
+                <span>{product.sellerInfo?.email}</span>
               </div>
 
-              <div className="flex items-center gap-3">
-                <Mail
-                  size={18}
-                  className="text-blue-500"
-                />
-
-                <span className="text-neutral-700">
-                  {product.sellerInfo?.email}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <Phone
-                  size={18}
-                  className="text-green-500"
-                />
-
-                <span className="text-neutral-700">
-                  {product.sellerInfo?.phone}
-                </span>
+              <div className="seller-contact">
+                <Phone size={16} />
+                <span>{product.sellerInfo?.phone}</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* CTA */}
 
-          <form 
-
-            action={`/api/payment`}
+          <motion.form
+            action="/api/payment"
             method="POST"
+            className="product-purchase-form"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
           >
-            
-          <input type="hidden" name="productPrice" value={product?.price} />
-          <input type="hidden" name="productId" value={product?._id} />
-          <input type="hidden" name="authorId" value={product?.sellerInfo?.userId} />
+            <input
+              type="hidden"
+              name="productPrice"
+              value={product?.price}
+            />
 
+            <input
+              type="hidden"
+              name="productId"
+              value={product?._id}
+            />
 
-          <Button
-            variant="primary"
-            className="
-          
-            rounded-none w-full
-            "
-            type="submit"
+            <input
+              type="hidden"
+              name="authorId"
+              value={product?.sellerInfo?.userId}
+            />
+
+            <Button
+              variant="primary"
+              className="product-purchase-button"
+              type="submit"
             >
-            <ShoppingCart size={20} />
-            ADD TO CART
-          </Button>
-            </form>
-        </motion.div>
-      </div>
+              <ShoppingCart size={19} />
+              ADD TO CART
+            </Button>
+          </motion.form>
+        </motion.section>
+      </motion.div>
     </motion.main>
   );
 };
