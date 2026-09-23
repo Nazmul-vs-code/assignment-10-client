@@ -14,7 +14,7 @@ const LetestProducts = () => {
             try {
                 const data = await getPublicProducts();
                 // Ensure we only set the state if data exists
-                setProducts(Array.isArray(data) ? data.slice(0, 6) : []);
+                setProducts(Array.isArray(data) ? data.slice(0, 8) : []);
             } catch (error) {
                 console.error("Failed to fetch products:", error);
             } finally {
@@ -30,7 +30,7 @@ const LetestProducts = () => {
     }
 
     return (
-        <section className="max-w-7xl mx-auto px-4 py-16">
+        <section className="w-[97%] mx-auto px-4 py-16">
             <h2 className="text-3xl font-bold mb-8">Latest Products</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
