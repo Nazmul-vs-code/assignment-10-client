@@ -13,57 +13,27 @@
   overflow: hidden;
 
   border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
 
-  border-radius: 24px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.055),
-      rgba(255, 255, 255, 0.015)
-    );
+  /* Plain black background */
+  background: #000000;
 
   box-shadow:
-    0 25px 70px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    0 20px 50px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 
 /* =========================================================
    DECORATIVE ORB
+   Disabled — plain background requested
 ========================================================= */
 
 .category-liquid-orb {
-  position: absolute;
-
-  width: 150px;
-  height: 150px;
-
-  top: -90px;
-  right: 20%;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle at 30% 25%,
-      rgba(255, 255, 255, 0.16),
-      transparent 15%
-    ),
-    rgba(239, 68, 68, 0.035);
-
-  border: 1px solid rgba(255, 255, 255, 0.07);
-
-  box-shadow:
-    inset -15px -15px 35px rgba(255, 255, 255, 0.025),
-    inset 15px 15px 35px rgba(255, 255, 255, 0.04);
-
-  filter: blur(1px);
-
-  pointer-events: none;
+  display: none;
 }
 
 
@@ -73,6 +43,7 @@
 
 .popular-category-header {
   position: relative;
+
   z-index: 2;
 
   display: flex;
@@ -93,7 +64,6 @@
   font-weight: 700;
 
   text-transform: uppercase;
-
   letter-spacing: 2px;
 }
 
@@ -116,15 +86,15 @@
 .category-live-indicator {
   display: flex;
   align-items: center;
+
   gap: 7px;
 
   padding: 7px 11px;
 
   border: 1px solid rgba(255, 255, 255, 0.08);
-
   border-radius: 999px;
 
-  background: rgba(255, 255, 255, 0.035);
+  background: #0a0a0a;
 
   color: rgba(255, 255, 255, 0.45);
 
@@ -132,7 +102,6 @@
   font-weight: 700;
 
   text-transform: uppercase;
-
   letter-spacing: 1px;
 }
 
@@ -155,6 +124,7 @@
 
 .popular-category-content {
   position: relative;
+
   z-index: 2;
 
   display: grid;
@@ -183,17 +153,13 @@
 
   border-radius: 20px;
 
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(255, 255, 255, 0.035),
-      transparent 65%
-    );
+  background: #050505;
 }
 
 .popular-category-chart
 .recharts-wrapper {
   position: relative;
+
   z-index: 1;
 }
 
@@ -292,12 +258,7 @@
 
   border-radius: 13px;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.045),
-      rgba(255, 255, 255, 0.012)
-    );
+  background: #080808;
 
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.04);
@@ -311,12 +272,7 @@
 .popular-category-item:hover {
   border-color: rgba(255, 255, 255, 0.13);
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.075),
-      rgba(255, 255, 255, 0.018)
-    );
+  background: #101010;
 
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.07),
@@ -375,6 +331,7 @@
   color: rgba(255, 255, 255, 0.82);
 
   font-size: 12px;
+
   font-weight: 600;
 
   text-overflow: ellipsis;
@@ -443,7 +400,7 @@
 
   border-radius: 50%;
 
-  background: rgba(255, 255, 255, 0.025);
+  background: #080808;
 
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -458,6 +415,7 @@
 
 .category-loading-row {
   display: flex;
+
   align-items: center;
 
   gap: 10px;
@@ -481,12 +439,7 @@
 
   border-radius: 999px;
 
-  background:
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.07),
-      rgba(255, 255, 255, 0.025)
-    );
+  background: #111111;
 
   animation: categorySkeleton 1.5s ease-in-out infinite;
 }
@@ -497,7 +450,7 @@
 
   border-radius: 999px;
 
-  background: rgba(255, 229, 138, 0.08);
+  background: #151515;
 
   animation: categorySkeleton 1.5s ease-in-out infinite;
 }
@@ -543,7 +496,7 @@
   .popular-category-card {
     padding: 18px;
 
-    border-radius: 19px;
+    border-radius: 0;
   }
 
   .popular-category-header h2 {
@@ -576,7 +529,6 @@
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .category-liquid-orb,
   .category-loading-chart,
   .category-loading-row div,
   .category-loading-row b {

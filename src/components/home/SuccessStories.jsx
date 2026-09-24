@@ -73,7 +73,7 @@ const SuccessStories = () => {
 
       {/* Heading */}
       <motion.div
-        className="relative z-10 mx-auto mb-14 max-w-7xl px-6 text-center"
+        className="relative z-10 mx-auto mb-14 max-w-7xl px-6 text-left"
         initial={{ opacity: 0, y: 25 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
@@ -89,11 +89,6 @@ const SuccessStories = () => {
         <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
           Our Success Stories
         </h2>
-
-        <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-zinc-500">
-          Discover how buyers and sellers are finding better opportunities
-          through ReSell Hub.
-        </p>
       </motion.div>
 
       {/* Train viewport */}

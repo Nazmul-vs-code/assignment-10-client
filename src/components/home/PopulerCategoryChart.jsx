@@ -148,11 +148,6 @@ const PopulerCategoryChart = () => {
 
           <h2>Popular Categories</h2>
         </div>
-
-        <div className="category-live-indicator">
-          <span />
-          Live
-        </div>
       </div>
 
       {/* =====================================================

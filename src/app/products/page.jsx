@@ -40,7 +40,7 @@ const ProductsPage = async ({ searchParams }) => {
 
   return (
     <main className="relative mx-auto max-w-7xl w-[97%] px-4 py-12">
-      <h1 className="mb-8 text-4xl font-black text-red-600">
+      <h1 className="mb-8 text-4xl">
         Latest Inventory
       </h1>
 
