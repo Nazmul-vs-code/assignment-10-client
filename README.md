@@ -42,7 +42,11 @@ ReSell Hub is a full-stack e-commerce marketplace built with Next.js 15 and Expr
 
 ## Screenshots
 
-![Homepage](public/images/logo.png)
+https://ibb.co.com/NdQqHwNT
+https://ibb.co.com/cKx5WKqL
+https://ibb.co.com/LD0PSF81
+https://ibb.co.com/Z6KW6t3g
+https://ibb.co.com/rKbNmg5G
 
 > Add more screenshots here showing the dashboard, product pages, and checkout flow.
 
