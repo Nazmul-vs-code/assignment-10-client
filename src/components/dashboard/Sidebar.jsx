@@ -57,7 +57,7 @@ export default function DashboardSidebar() {
   const navItems = dashboardItems[role] || dashboardItems.buyer;
 
   const NavContent = () => (
-    <div className="flex flex-col h-full justify-between bg-black">
+    <div className="flex h-full flex-col justify-between bg-[#111111]">
       <nav className="flex flex-col gap-2 p-4">
         {/* Logo and User Profile Section */}
         <div className="mb-6 flex flex-col gap-6 px-3">
@@ -86,7 +86,7 @@ export default function DashboardSidebar() {
               <Button
                 variant="ghost"
                 className={`w-full justify-start rounded-none transition-colors ${
-                  isActive ? "bg-neutral-800 text-white hover:bg-neutral-900" : "text-foreground hover:bg-default-200"
+                  isActive ? "border-l-2 border-[#e84a45] bg-[#202020] pl-3 text-white" : "border-l-2 border-transparent pl-3 text-foreground hover:bg-white/5"
                 }`}
               >
                 <item.icon className="size-5" />
@@ -114,12 +114,12 @@ export default function DashboardSidebar() {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:block w-64 border-r bg-black border-default-200 h-screen bg-content1 shadow-sm">
+      <aside className="hidden h-screen w-64 border-r border-[#303030] bg-[#111111] lg:block">
         <NavContent />
       </aside>
 
       {/* Mobile Trigger */}
-      <div className="lg:hidden bg-black p-4">
+      <div className="bg-[#111111] p-4 lg:hidden">
         <button 
           onClick={() => setIsOpen(true)}
           className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-default-100 transition-colors"
@@ -132,7 +132,7 @@ export default function DashboardSidebar() {
       {isOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="fixed inset-0 bg-black/50" onClick={() => setIsOpen(false)} />
-          <div className="fixed left-0 top-0 bottom-0 w-64 bg-content1 shadow-2xl border-r border-default-200">
+          <div className="fixed bottom-0 left-0 top-0 w-64 border-r border-[#303030] bg-[#111111] shadow-2xl">
             <div className="flex justify-end p-4">
               <button onClick={() => setIsOpen(false)}><X /></button>
             </div>

@@ -57,11 +57,11 @@
 }
 
 .hero-logo-resel {
-  color: #ef4444;
+  color: #e84a45;
 }
 
 .hero-logo-hub {
-  color: #ffe58a;
+  color: #f3d33b;
 }
 
 /* Main text */
@@ -547,4 +547,28 @@
   .scene-water-ball {
     animation: none;
   }
+}
+
+.hero {
+  background: #111111;
+}
+
+.hero-water-ball,
+.scene-water-ball {
+  display: none;
+}
+
+.hero-product-card {
+  border-color: #303030;
+  border-radius: 18px;
+  background: #181818;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+.hero-product-card:hover {
+  border-color: #494949;
+}
+
+.hero-card-content strong {
+  color: #f3d33b;
 }

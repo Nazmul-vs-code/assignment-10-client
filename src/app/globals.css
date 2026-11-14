@@ -2,16 +2,17 @@
 @import "@heroui/styles";
 
 :root {
-  --color-red: #ef4444;
-  --color-red-dark: #991b1b;
-  --color-white: #ffffff;
-  --color-gold: #ffe9a6;
-
-  --color-bg: #080808;
-  --color-muted: rgba(255, 255, 255, 0.65);
-
-  --glass-bg: rgba(255, 255, 255, 0.045);
-  --glass-border: rgba(255, 255, 255, 0.16);
+  color-scheme: dark;
+  --color-brand-red: #e84a45;
+  --color-brand-yellow: #f3d33b;
+  --color-bg: #111111;
+  --color-surface: #181818;
+  --color-card: #202020;
+  --color-elevated: #262626;
+  --color-text: #f5f5f2;
+  --color-text-secondary: #a3a3a0;
+  --color-text-muted: #777777;
+  --color-border: #303030;
   --font-main: "myfont", "Segoe UI", sans-serif;
 }
 
@@ -25,119 +26,58 @@
 
 html,
 body {
+  min-height: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
   font-family: var(--font-main);
   letter-spacing: -0.01em;
 }
 
-
-/* =========================================================
-   GLOBAL BUTTON STYLE
-========================================================= */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
 
 button {
-  position: relative;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  min-height: 40px;
-  padding: 9px 16px;
-
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-
-  color: inherit;
-
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.03),
-    0 8px 24px rgba(0, 0, 0, 0.2);
-
-  overflow: hidden;
-
   cursor: pointer;
-
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease,
-    filter 0.25s ease;
 }
 
-/* Liquid reflection */
-
-button::before {
-  content: "";
-
-  position: absolute;
-
-  top: -80%;
-  left: -35%;
-
-  width: 65%;
-  height: 220%;
-
-  border-radius: 50%;
-
-  background: rgba(255, 255, 255, 0.08);
-
-  filter: blur(12px);
-
-  transform: rotate(25deg);
-
-  pointer-events: none;
-
-  transition: transform 0.55s ease;
+button:disabled {
+  cursor: not-allowed;
 }
 
-/* Keep button content above reflection */
-
-button > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* Hover */
-
-button:hover {
-  transform: translateY(-2px);
-
-  border-color: rgba(255, 255, 255, 0.25);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    0 12px 30px rgba(0, 0, 0, 0.3);
-
-  filter: brightness(1.08);
-}
-
-button:hover::before {
-  transform: translateX(120%) rotate(25deg);
-}
-
-/* Click */
-
-button:active {
-  transform: translateY(0) scale(0.97);
-}
-
-/* Keyboard focus */
-
-button:focus-visible {
-  outline: 2px solid rgba(255, 229, 138, 0.7);
+:focus-visible {
+  outline: 2px solid var(--color-brand-yellow);
   outline-offset: 3px;
 }
 
-/* Disabled */
+a {
+  transition: color 160ms ease;
+}
 
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  filter: none;
+::selection {
+  background: rgba(232, 74, 69, 0.3);
+  color: var(--color-text);
+}
+
+[class*="gradient"] {
+  background-image: none !important;
+}
+
+.text-transparent.bg-clip-text {
+  color: var(--color-brand-red) !important;
+  -webkit-text-fill-color: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

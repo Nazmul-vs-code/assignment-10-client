@@ -26,11 +26,11 @@ const Navbar = () => {
   if (pathName?.includes('/dashboard')) return null;
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-red-900/30 bg-black/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-40 w-full border-b border-[#303030] bg-[#111111]/95 backdrop-blur-md">
       <header className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         {/* Logo and Mobile Trigger */}
         <div className="flex items-center gap-4">
-          <button className="md:hidden p-2 text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button aria-label={isMenuOpen ? "Close menu" : "Open menu"} className="md:hidden rounded-lg p-2 text-white hover:bg-white/5" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <div className="space-y-1.5">
               <span className="block h-0.5 w-6 bg-white" />
               <span className="block h-0.5 w-6 bg-white" />
@@ -44,7 +44,7 @@ const Navbar = () => {
         <ul className="hidden md:flex items-center gap-8 text-neutral-300">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
-              <Link href={link.href} className="font-medium hover:text-red-500 transition-colors">
+              <Link href={link.href} className="font-medium transition-colors hover:text-[#e84a45]">
                 {link.name}
               </Link>
             </li>
@@ -56,32 +56,32 @@ const Navbar = () => {
           {!user ? (
             <>
               <Link href="/signin" className="font-medium text-neutral-300 hover:text-white">Login</Link>
-              <Link href="/signup"><Button size="sm" className="bg-red-600 text-white hover:bg-red-700">Sign Up</Button></Link>
+              <Link href="/signup"><Button size="sm" className="bg-[#e84a45] font-semibold text-white hover:bg-[#d83d38]">Sign Up</Button></Link>
             </>
           ) : (
             <Dropdown>
               <Dropdown.Trigger>
-                <div className="cursor-pointer ring-2 ring-red-900 rounded-full">
+                <div className="cursor-pointer rounded-full ring-1 ring-[#303030]">
                   <Avatar>
                     <Avatar.Image alt={user?.name} src={user?.photo} />
                     <Avatar.Fallback>{user?.name?.charAt(0) || 'U'}</Avatar.Fallback>
                   </Avatar>
                 </div>
               </Dropdown.Trigger>
-              <Dropdown.Popover className="bg-zinc-950 border border-red-900/50">
-                <div className="p-3 border-b border-red-900/30 flex flex-col gap-1">
+              <Dropdown.Popover className="border border-[#303030] bg-[#181818]">
+                <div className="flex flex-col gap-1 border-b border-[#303030] p-3">
                   <span className="text-sm font-semibold text-white">{user?.name}</span>
                   <span className="text-xs text-neutral-400">{user?.email}</span>
                 </div>
                 <Dropdown.Menu>
                   <Dropdown.Item id="dashboard">
                     <Link href={`/dashboard/${user?.role}`} className="flex items-center gap-2 text-neutral-200">
-                      <MdDashboard className="text-red-500" /> Dashboard
+                      <MdDashboard className="text-[#e84a45]" /> Dashboard
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item id="profile" className="text-neutral-200">
                     <Link href="/profile" className="flex items-center gap-2">
-                      <CgProfile className="text-red-500" /> Profile
+                      <CgProfile className="text-[#e84a45]" /> Profile
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item id="logout" variant="danger" onClick={() => authClient.signOut()}>
@@ -96,19 +96,19 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-red-900/30 bg-zinc-950 p-4 flex flex-col gap-2 text-white">
+        <div className="flex flex-col gap-2 border-t border-[#303030] bg-[#181818] p-4 text-white md:hidden">
           {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className="p-3 hover:bg-red-950/30 rounded-lg" onClick={() => setIsMenuOpen(false)}>
+            <Link key={link.href} href={link.href} className="rounded-lg p-3 hover:bg-white/5" onClick={() => setIsMenuOpen(false)}>
               {link.name}
             </Link>
           ))}
           
-          <div className="border-t border-red-900/30 pt-4 mt-2">
+          <div className="mt-2 border-t border-[#303030] pt-4">
             {!user ? (
               <div className="flex flex-col gap-3">
-                <Link href="/signin" className="p-3 text-center border border-red-900/50 rounded-lg hover:bg-red-950/30">Login</Link>
+                <Link href="/signin" className="rounded-lg border border-[#303030] p-3 text-center hover:bg-white/5">Login</Link>
                 <Link href="/signup" className="w-full">
-                  <Button className="w-full bg-red-600">Sign Up</Button>
+                  <Button className="w-full bg-[#e84a45] font-semibold text-white hover:bg-[#d83d38]">Sign Up</Button>
                 </Link>
               </div>
             ) : (
@@ -117,9 +117,9 @@ const Navbar = () => {
                   <p className="text-sm font-bold">{user?.name}</p>
                   <p className="text-xs text-neutral-400">{user?.email}</p>
                 </div>
-                <Link href={`/dashboard/${user?.role}`} className="block p-3 hover:bg-red-950/30 rounded-lg">Dashboard</Link>
-                <Link href="/profile" className="block p-3 hover:bg-red-950/30 rounded-lg">Profile</Link>
-                <Button variant="danger" onClick={() => authClient.signOut()} className="w-full mt-2 bg-red-600">Logout</Button>
+                <Link href={`/dashboard/${user?.role}`} className="block rounded-lg p-3 hover:bg-white/5">Dashboard</Link>
+                <Link href="/profile" className="block rounded-lg p-3 hover:bg-white/5">Profile</Link>
+                <Button variant="danger" onClick={() => authClient.signOut()} className="mt-2 w-full bg-[#e84a45] text-white">Logout</Button>
               </div>
             )}
           </div>

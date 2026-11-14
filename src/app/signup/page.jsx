@@ -55,7 +55,7 @@ export default function SignUpPage() {
       className="max-w-xl mx-auto mt-10 p-6"
     >
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-indigo-600">
+        <h1 className="text-4xl font-extrabold text-[#e84a45]">
           Join ReSell Hub
         </h1>
         <p className="text-muted-foreground mt-2">Create your account to start buying and selling</p>
@@ -86,7 +86,7 @@ export default function SignUpPage() {
               </Select.Popover>
             </Select>
 
-            <Button type="submit" className="w-full mt-4 bg-indigo-600 hover:bg-indigo-700 text-white">
+            <Button type="submit" className="mt-4 w-full bg-[#e84a45] font-semibold text-white hover:bg-[#d83d38]">
               Complete Signup
             </Button>
           </Fieldset>

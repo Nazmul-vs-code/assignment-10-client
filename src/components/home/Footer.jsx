@@ -14,13 +14,7 @@ const Footer = () => {
 
   return (
 
-    <footer className="relative overflow-hidden bg-black text-zinc-400">
-      {/* Red ambient glow */}
-      <div className="pointer-events-none absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-red-600/10 blur-[120px]" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-64 w-64 rounded-full bg-red-700/5 blur-[100px]" />
-
-      {/* Top red line */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-red-600 to-transparent" />
+    <footer className="relative overflow-hidden border-t border-[#303030] bg-[#111111] text-zinc-400">
 
       <div className="relative mx-auto max-w-[97%] px-6 py-16 md:px-10">
         {/* Main footer content */}
@@ -42,7 +36,7 @@ const Footer = () => {
 
             {/* Security badge */}
             <div className="mt-7 inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950 px-4 py-2 text-xs text-zinc-500">
-              <ShieldCheck className="h-4 w-4 text-red-500" />
+              <ShieldCheck className="h-4 w-4 text-[#e84a45]" />
               Secure marketplace experience
             </div>
           </div>

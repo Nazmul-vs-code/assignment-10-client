@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Avatar, Button } from "@heroui/react";
+import { Avatar } from "@heroui/react";
 import { Heart, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { addWishList } from "@/lib/actions/wishlist";
@@ -116,15 +116,15 @@ export const ProductCard = ({ product }) => {
                     </div>
 
                     {/* CTA */}
-                    <button>
+                    <button className="product-card-buy">
                     <Link
                         href={`/products/${product._id}`}
-                        className="text-red-500"
+                        className="text-white"
                     >
                         Buy Now
 
                     </Link>
-                        <ArrowUpRight className="text-red-500" size={16} />
+                        <ArrowUpRight className="text-white" size={16} />
                     </button>
                 </div>
 

@@ -24,7 +24,7 @@ export default function NotFound() {
         </motion.div>
 
         {/* 404 Header */}
-        <h1 className="text-[120px] font-black text-transparent bg-clip-text bg-gradient-to-b from-red-600 to-red-900 leading-none drop-shadow-2xl">
+        <h1 className="text-[120px] font-black leading-none text-[#e84a45]">
           404
         </h1>
         
